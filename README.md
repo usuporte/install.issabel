@@ -9,6 +9,9 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 ##### SCRIPTS DESENVOLVIDO PELA EQUIPE DE SUPORTE CAM
 ```
+- 00 Software Disponível (ISSABEL)
+- 00.01 Link https://www.issabel.org/
+
 - 01 Bootar o Pendrive com ISSABEL
 - 02 Selecionar Versão 11
 - 03 Na Tela que Tá Demorando Muito Tecle [ESC]
@@ -18,9 +21,9 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 - 05.01 Data e Hora
 - 05.02 Teclado
 
-- 05.03 Software Disponível (ISSABEL)
 # >> >> 04 >> Destino Instalação: Desmarcar PenDrive, Marcar Configurar Automaticamente, Recuperar Espaço
 # >> >> 05 >> Recuperar Espaço: Apagar Tudo e Recuperar Espaço
+
 - 06 Rede e Nome (Ativa eth0 => ON)
 - 07 Senha Raiz e do MariaDB (Senha do root => mysql.admin)
 - 08 Toda vez que for executado esse comando será obrigatorio realizar o processo 
