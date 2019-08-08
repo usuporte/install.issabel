@@ -12,14 +12,14 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 <ol>
   <li>Software Disponível (ISSABEL)</li>
   <li>Link para Realizar o Download da ISO https://www.issabel.org/</li>
-<ol>
+</ol>
   
 <ol>
   <li>Bootar o Pendrive com ISSABEL</li>
   <li>Selecionar Versão 11</li>
   <li>Na Tela que Tá Demorando Muito Tecle [ESC]</li>
   <li>Dracut: /# (Digite Exit)</li>
-<ol>
+</ol>
 
 
 - 05 Na Interface:  
