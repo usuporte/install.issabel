@@ -26,9 +26,11 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 #### Tela de Instalação no Hardware CAMBOX Físico
 
-- 01 - Tela Inicial da Instalação ISSABEL
+- 01 - Tela Inicial da Instalação ISSABEL;
 
 ![01 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png)
+
+- 02 - Tela de Boas Vindas ao ISSABEL, Localize o Idioma que quer Usar;
 
 
 
