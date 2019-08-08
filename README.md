@@ -17,7 +17,6 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 </ol>
 
 
-  
 <ol>
   <li>Bootar o Pendrive com ISSABEL</li>
   <li>Selecionar Versão 11</li>
@@ -25,10 +24,12 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
   <li>Dracut: /# (Digite Exit)</li>
 </ol>
 
+<ol>
+  <li>Na Interface</li>
+  <li>Data e Hora</li>
+  <li>Teclado</li>
+</ol>
 
-- 05 Na Interface:  
-- 05.01 Data e Hora
-- 05.02 Teclado
 
 # >> >> 04 >> Destino Instalação: Desmarcar PenDrive, Marcar Configurar Automaticamente, Recuperar Espaço
 # >> >> 05 >> Recuperar Espaço: Apagar Tudo e Recuperar Espaço
