@@ -11,14 +11,16 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 <ol>
   <li>Software Disponível (ISSABEL)</li>
-  <li>-**Link**: https://www.issabel.org/</li>
+  <li>Link para Realizar o Download da ISO https://www.issabel.org/</li>
 <ol>
   
-  
-- 01 Bootar o Pendrive com ISSABEL
-- 02 Selecionar Versão 11
-- 03 Na Tela que Tá Demorando Muito Tecle [ESC]
-- 04 Dracut: /# (Digite Exit)
+<ol>
+  <li>Bootar o Pendrive com ISSABEL</li>
+  <li>Selecionar Versão 11</li>
+  <li>Na Tela que Tá Demorando Muito Tecle [ESC]</li>
+  <li>Dracut: /# (Digite Exit)</li>
+<ol>
+
 
 - 05 Na Interface:  
 - 05.01 Data e Hora
