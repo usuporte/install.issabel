@@ -9,11 +9,12 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 ##### SCRIPTS DESENVOLVIDO PELA EQUIPE DE SUPORTE CAM
 
-- 01 >> Bootar o Pendrive com ISSABEL
-- 02 >> Selecionar Versão 11
-- 03 >> Na Tela que Tá Demorando Muito Tecle [ESC]
-- 04 >> Dracut: /# (Digite Exit)
-- >> 05 >> Na Interface:  
-- >> >> 01 >> Data e Hora
-- >> >> 02 >> Teclado
+- 01 Bootar o Pendrive com ISSABEL
+- 02 Selecionar Versão 11
+- 03 Na Tela que Tá Demorando Muito Tecle [ESC]
+- 04 Dracut: /# (Digite Exit)
+
+- 05 Na Interface:  
+- 05.01 Data e Hora
+- 05.02 Teclado
 
