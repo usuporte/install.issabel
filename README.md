@@ -32,6 +32,11 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 # >> >> >> 08.02 >> # vim /etc/selinux/config ou sudo systemctl disable firewalld 
 # >> >> >> >> Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
 
+# Reiniciar o Servidor Após a Configuraço
+# >> >> 10 >> Criação de Usuário root (cam) 
+# >> >> >> 10.01 >> # vim /etc/sudoers (cam       ALL=(ALL)       ALL)
+# >> >> 11 >> Configuração da Rede
+# >> >> >> 11.01 >> # systemctl enable dhcpd && /etc/init.d/netword restart
 
 
 ```
