@@ -102,11 +102,11 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 ![19 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738587-0998ed80-ba09-11e9-989e-823556d16893.png)
 
-- 20 - 
+- 20 - Tela de Edição, usuário cam # sudo vim /etc/sudoers
 
 ![20 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738594-0c93de00-ba09-11e9-9524-860e56612852.png)
 
-- 21 - 
+- 21 - Tela add # cam     ALL=(ALL)     ALL
 
 ![21 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738599-0ef63800-ba09-11e9-94c4-ae34274bfce1.png)
 
