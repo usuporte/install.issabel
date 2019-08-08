@@ -11,7 +11,7 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 <ol>
   <li>Software Disponível - ISSABEL</li>
-  <li>Link para Realizar o Download da ISO -ISSABEL https://www.issabel.org/</li>
+  <li>Link para Realizar o Download da ISO - ISSABEL https://www.issabel.org/</li>
 </ol>
 
 
