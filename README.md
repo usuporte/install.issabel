@@ -24,6 +24,18 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
   <li>Dracut: /# (Digite Exit)</li>
 </ol>
 
+#### Tela de Instalação no Hardware CAMBOX Físico
+
+<ol>
+  <li>Tela Inicial da Imagem ISSABEL 
+  
+  </li>
+  <li>Data e Hora</li>
+  <li>Teclado</li>
+</ol>
+
+
+
 <ol>
   <li>Na Interface</li>
   <li>Data e Hora</li>
