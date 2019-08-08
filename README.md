@@ -31,8 +31,6 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 <img align="center" width="640" height="480" src="https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png">
 
-![02 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png)
-
 - 03 - Tela de Resumo da Instalação;
 
 ![03 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738085-cf7b1c00-ba07-11e9-8239-cc8d7281f151.png)
