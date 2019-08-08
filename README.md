@@ -17,5 +17,19 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 - 05 Na Interface:  
 - 05.01 Data e Hora
 - 05.02 Teclado
+
+- 05.03 Software Disponível (ISSABEL)
+# >> >> 04 >> Destino Instalação: Desmarcar PenDrive, Marcar Configurar Automaticamente, Recuperar Espaço
+# >> >> 05 >> Recuperar Espaço: Apagar Tudo e Recuperar Espaço
+- 06 Rede e Nome (Ativa eth0 => ON)
+- 07 Senha Raiz e do MariaDB (Senha do root => mysql.admin)
+- 08 Toda vez que for executado esse comando será obrigatorio realizar o processo 
+- 08 # sudo yum update -y && sudo yum upgrade -y
+# >> >> 09 >> Configuração SELINUX e Firewall 
+# >> >> >> 08.02 >> # vim /etc/selinux/config ou sudo systemctl disable firewalld 
+# >> >> >> >> Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
+
+
+
 ```
 
