@@ -28,7 +28,7 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 <ol>
   <li>Tela Inicial da Imagem ISSABEL 
-  
+  ![01 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png)
   </li>
   <li>Data e Hora</li>
   <li>Teclado</li>
