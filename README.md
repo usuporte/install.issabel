@@ -38,6 +38,15 @@ Del. Castilho, Rio de Janeiro - RJ, Brasil - BR, CEP: 20.765-000
 
 ![03 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738085-cf7b1c00-ba07-11e9-8239-cc8d7281f151.png)
 
+- 04 - Tela Data e Hora;
+
+![04 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738469-c179cb00-ba08-11e9-949b-d2363a800467.png)
+
+- 05 - Tela Layout do Teclado;
+
+![05 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738476-c76fac00-ba08-11e9-8f90-2ec3ce07eded.png)
+
+
 <ol>
   <li>Na Interface</li>
   <li>Data e Hora</li>
