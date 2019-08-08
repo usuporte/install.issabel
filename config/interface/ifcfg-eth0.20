@@ -1,0 +1,10 @@
+# Realtek Semiconductor Co., Ltd. RTL8111/8168B PCI Express Gigabit Ethernet controller
+DEVICE=eth0.20
+PHYSDEV=eth0
+VLAN=yes
+BOOTPROTO=static
+DHCPCLASS=
+#HWADDR=94:DE:80:F4:86:0A
+ONBOOT=yes
+IPADDR=192.0.2.201
+NETMASK=255.255.255.240
