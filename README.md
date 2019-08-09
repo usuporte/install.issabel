@@ -37,15 +37,15 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![05 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738476-c76fac00-ba08-11e9-8f90-2ec3ce07eded.png)
 
-- 06 - Tela Suporte a Idiomas;
+- 06 - Na Tela Suporte a Idiomas, Verificar qual Idioma está Selecionado, Nesse Caso, Selecionamos "Português -> Portuguese", "Português (Brasil)", e pressione o botão "Finalizado";
 
 ![06 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738483-cb033300-ba08-11e9-9dd3-6b99c8bc945d.png)
 
-- 07 - Tela Fonte de Instalação;
+- 07 - Na Tela Fonte de Instalação, Selecionamos "Detectar Automaticamente a Mídia de Instalação", e pressione o botão "Finalizado";
 
 ![07 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738488-cfc7e700-ba08-11e9-9427-cde9796a65bc.png)
 
-- 08 - Tela Seleção de Software, Selecionar Versão 11;
+- 08 - Na Tela Seleção de Software, Selecionamos **Issabel With Asterisk 11**, e pressione o botão **Finalizado**;
 
 ![08 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738498-d5bdc800-ba08-11e9-9a39-6ea31bb41b7c.png)
 
