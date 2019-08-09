@@ -13,7 +13,7 @@ O foco da **CAM Tecnologia** ao realizar revenda de equipamentos é oferecer a s
 
 #### Tela de Instalação no Hardware CAMBOX Físico, Utilizando um PenDrive Bootavel
 
-- 01 - Na Tela Inicial da Instalação Issabel, Selecione **Install**, e Pressione o Botão **Enter**;
+- 01 - Na Tela Inicial da **Instalação Issabel**, Selecione **Install**, e Pressione o Botão **Enter**;
 
 <p align="center">
 <img src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png" width="800" height="600" title="Instalação Issabel">
@@ -40,61 +40,61 @@ O foco da **CAM Tecnologia** ao realizar revenda de equipamentos é oferecer a s
 - 05 - Na Tela **Layout do Teclado**, Verificar qual Teclado está Selecionado, Nesse Caso, Selecionamos **Português (Brasil)**, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![05 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738476-c76fac00-ba08-11e9-8f90-2ec3ce07eded.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738476-c76fac00-ba08-11e9-8f90-2ec3ce07eded.png" width="800" height="600" title="Layout do Teclado">
 </p>
 
 - 06 - Na Tela **Suporte a Idiomas**, Verificar qual Idioma está Selecionado, Nesse Caso, Selecionamos **Português -> Portuguese**, **Português (Brasil)**, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![06 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738483-cb033300-ba08-11e9-9dd3-6b99c8bc945d.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738483-cb033300-ba08-11e9-9dd3-6b99c8bc945d.png" width="800" height="600" title="Suporte a Idiomas">
 </p>
 
 - 07 - Na Tela **Fonte de Instalação**, Selecionamos **Detectar Automaticamente a Mídia de Instalação**, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![07 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738488-cfc7e700-ba08-11e9-9427-cde9796a65bc.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738488-cfc7e700-ba08-11e9-9427-cde9796a65bc.png" width="800" height="600" title="Fonte de Instalação">
 </p>
 
 - 08 - Na Tela **Seleção de Software**, Selecionamos **Issabel With Asterisk 11**, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![08 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738498-d5bdc800-ba08-11e9-9a39-6ea31bb41b7c.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738498-d5bdc800-ba08-11e9-9a39-6ea31bb41b7c.png" width="800" height="600" title="Seleção de Software">
 </p>
 
 - 09 - Na Tela **Destinaço da Instalação**, Selecione o Disco Desejado, Nesse Caso o Disco Selecionado é **sda**, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![09 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738507-da827c00-ba08-11e9-83fd-180663832c0c.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738507-da827c00-ba08-11e9-83fd-180663832c0c.png" width="800" height="600" title="Destinaço da Instalação">
 </p>
 
 - 10 - Na Tela **Rede e Nome do Host**, Vamos Verificar a Rede **eth0** se Está **Habilitada**, Pressine o Botão **Configurar** para IP **Static** ou Deixa no Modo **DHCP**, Já o **Nome do host**, **issabel.local** e Pressione o Botão **Aplicar**, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![10 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738523-e1a98a00-ba08-11e9-9e7d-7c4d37474883.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738523-e1a98a00-ba08-11e9-9e7d-7c4d37474883.png" width="800" height="600" title="Rede e Nome do Host">
 </p>
 
 - 11 - Na Tela **Kdump**, Não Precisa Realizar Configurações, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![11 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738534-e8d09800-ba08-11e9-93ff-28462533baf9.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738534-e8d09800-ba08-11e9-93ff-28462533baf9.png" width="800" height="600" title="Kdump">
 </p>
 
 - 12 - Na Tela **Política de Segurança**, Não Precisa Realizar Configurações, e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![12 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738539-ecfcb580-ba08-11e9-9f10-334d4c6aa6b0.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738539-ecfcb580-ba08-11e9-9f10-334d4c6aa6b0.png" width="800" height="600" title="Política de Segurança">
 </p>
 
 - 13 - Na Tela **Configuração de Usuário**;
 
 <p align="center">
-![13 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738552-f4bc5a00-ba08-11e9-93db-ee36692e45dd.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738552-f4bc5a00-ba08-11e9-93db-ee36692e45dd.png" width="800" height="600" title="Configuração de Usuário">
 </p>
 
 - 14 - Na Tela **Senha Root**, Insira a Senha para Usuário Root, Senha Raiz, **cambox.root**;
 
 <p align="center">
-![14 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738561-fc7bfe80-ba08-11e9-83f5-6b807bb49e0b.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738561-fc7bfe80-ba08-11e9-83f5-6b807bb49e0b.png" width="800" height="600" title="Senha Root">
 </p>
 
 - 15 - Na Tela **Criar Usuário**, Informe o Usuário Padrão, Nome Completo, **Cam Tecnologia**, o Nome do Usuário, **cam**, a Senha, **PADRÃO DA CAM**;
