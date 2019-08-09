@@ -17,7 +17,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 #### Tela de Instalação no Hardware CAMBOX Físico
 
-- 01 - Na Tela Inicial da Instalação Issabel, Selecione "Install" e pressione o botão "Enter";
+- 01 - Na Tela Inicial da Instalação Issabel, Selecione **Install** e Pressione o Botão **Enter**;
 
 ![01 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png)
 
@@ -29,23 +29,23 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![03 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738085-cf7b1c00-ba07-11e9-8239-cc8d7281f151.png)
 
-- 04 - Na Tela Data e Hora, Vamos configurar a Região que Nesse Caso Selecione "Américas", Cidade "São Paulo", Hora da Rede "Habilitado", Verificar se a Data e a Hora "Habilitar, 24-horas" estão Corretas e pressione o botão "Finalizado";
+- 04 - Na Tela **Data e Hora**, Vamos configurar a Região que Nesse Caso Selecione **Américas**, Cidade **São Paulo**, Hora da Rede **Habilitado**, Verificar se a Data e a Hora **Habilitar, 24-horas** estão Corretas e Pressione o Botão **Finalizado**;
 
 ![04 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738469-c179cb00-ba08-11e9-949b-d2363a800467.png)
 
-- 05 - Na Tela Layout do Teclado, Verificar qual Teclado está Selecionado, Nesse Caso, Selecionamos "Português (Brasil)", e pressione o botão "Finalizado";
+- 05 - Na Tela **Layout do Teclado**, Verificar qual Teclado está Selecionado, Nesse Caso, Selecionamos **Português (Brasil)**, e Pressione o Botão **Finalizado**;
 
 ![05 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738476-c76fac00-ba08-11e9-8f90-2ec3ce07eded.png)
 
-- 06 - Na Tela Suporte a Idiomas, Verificar qual Idioma está Selecionado, Nesse Caso, Selecionamos "Português -> Portuguese", "Português (Brasil)", e pressione o botão "Finalizado";
+- 06 - Na Tela **Suporte a Idiomas**, Verificar qual Idioma está Selecionado, Nesse Caso, Selecionamos **Português -> Portuguese**, **Português (Brasil)**, e Pressione o Botão **Finalizado**;
 
 ![06 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738483-cb033300-ba08-11e9-9dd3-6b99c8bc945d.png)
 
-- 07 - Na Tela Fonte de Instalação, Selecionamos "Detectar Automaticamente a Mídia de Instalação", e pressione o botão "Finalizado";
+- 07 - Na Tela **Fonte de Instalação**, Selecionamos **Detectar Automaticamente a Mídia de Instalação**, e Pressione o Botão **Finalizado**;
 
 ![07 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738488-cfc7e700-ba08-11e9-9427-cde9796a65bc.png)
 
-- 08 - Na Tela Seleção de Software, Selecionamos **Issabel With Asterisk 11**, e pressione o botão **Finalizado**;
+- 08 - Na Tela **Seleção de Software**, Selecionamos **Issabel With Asterisk 11**, e Pressione o Botão **Finalizado**;
 
 ![08 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738498-d5bdc800-ba08-11e9-9a39-6ea31bb41b7c.png)
 
