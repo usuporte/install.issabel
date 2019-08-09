@@ -11,7 +11,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 > Software Disponível, Link para Realizar o **[Download Issabel ISO](https://www.issabel.org/)**
 
-#### Tela de Instalação no Hardware CAMBOX Físico
+#### Tela de Instalação no Hardware CAMBOX Físico, Utilizando um PenDrive Bootavel
 
 - 01 - Na Tela Inicial da Instalação Issabel, Selecione **Install**, e Pressione o Botão **Enter**;
 
