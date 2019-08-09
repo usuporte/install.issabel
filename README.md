@@ -99,16 +99,14 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 
 
-Toda vez que for executado esse comando será obrigatorio realizar o processo 
-sudo yum update -y && sudo yum upgrade -y
-Configuração SELINUX e Firewall 
-vim /etc/selinux/config ou sudo systemctl disable firewalld 
-Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
+. Toda vez que for executado esse comando será obrigatorio realizar o processo 
+. sudo yum update -y && sudo yum upgrade -y
+. Configuração SELINUX e Firewall 
+. vim /etc/selinux/config ou sudo systemctl disable firewalld 
+. Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
 
 # Reiniciar o Servidor Após a Configuraço
-Criação de Usuário root (cam) 
- vim /etc/sudoers (cam       ALL=(ALL)       ALL)
-Configuração da Rede
-systemctl enable dhcpd && /etc/init.d/netword restart
+. Configuração da Rede
+. systemctl enable dhcpd && /etc/init.d/netword restart
 
 
