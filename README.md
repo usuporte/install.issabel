@@ -18,13 +18,13 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 #### Tela de Instalação no Hardware CAMBOX Físico
 
-- 01 - Tela Inicial da Instalação ISSABEL;
+- 01 - Na Tela Inicial da Instalação Issabel, Selecione "Install" e pressione o botão "Enter" ;
 
 <img align="center" width="640" height="480" src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png">
 
 - 02 - Tela de Boas Vindas - ISSABEL, Localize o Idioma que quer Usar;
 
-<img align="center" width="640" height="480" src="https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png">
+![02 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png)
 
 - 03 - Tela de Resumo da Instalação;
 
