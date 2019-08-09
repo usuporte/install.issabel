@@ -13,7 +13,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 #### Tela de Instalação no Hardware CAMBOX Físico
 
-- 01 - Na Tela Inicial da Instalação Issabel, Selecione **Install** e Pressione o Botão **Enter**;
+- 01 - Na Tela Inicial da Instalação Issabel, Selecione **Install**, e Pressione o Botão **Enter**;
 
 <img src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png" width="800" height="600">
 
@@ -85,11 +85,11 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![18 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738584-07369380-ba09-11e9-8753-2ceefd7ec7e9.png)
 
-- 19 - Tela Acesso a Máquina;
+- 19 - Na Tela **Acesso a Máquina**, Informe o Usuário **root**, e a Senha **cambox.root**, e Pressione o Botão **Enter**;
 
 ![19 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738587-0998ed80-ba09-11e9-989e-823556d16893.png)
 
-- 20 - Tela de Edição, usuário cam # sudo vim /etc/sudoers
+- 20 - Na Tela **Terminal**, Usuário root # **sudo vim /etc/sudoers**;
 
 ![20 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738594-0c93de00-ba09-11e9-9524-860e56612852.png)
 
