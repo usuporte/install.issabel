@@ -65,23 +65,23 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![13 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738552-f4bc5a00-ba08-11e9-93db-ee36692e45dd.png)
 
-- 14 - Tela Senha Root;
+- 14 - Na Tela **Senha Root**, Insira a Senha para Usuário Root, Senha Raiz, **cambox.root**;
 
 ![14 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738561-fc7bfe80-ba08-11e9-83f5-6b807bb49e0b.png)
 
-- 15 - Tela Criar Usuário;
+- 15 - Na Tela **Criar Usuário**, Informe o Usuário Padrão, Nome Completo, **Cam Tecnologia**, o Nome do Usuário, **cam**, a Senha, **PADRÃO DA CAM**;
 
 ![15 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738569-ff76ef00-ba08-11e9-9b0e-074c63c0f24b.png)
 
-- 16 - Tela Compiling GeoIP, aguarde;
+- 16 - Na Tela **Compiling GeoIP**, Só Aguardar;
 
 ![16 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738574-0271df80-ba09-11e9-9cac-fd5e7c5fa588.png)
 
-- 17 - Tela Configuração MariaDB Senha;
+- 17 - Na Tela **Configuração MariaDB** Senha, **mysql.root**, e Pressione o Botão **Aceitar**;
 
 ![17 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738578-04d43980-ba09-11e9-8a26-d33571f1dd2b.png)
 
-- 18 - Tela Configuração IssabelPBX Senha;
+- 18 - Na Tela **Configuração IssabelPBX**, Senha **admin**, e Pressione o Botão **Aceitar**;
 
 ![18 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738584-07369380-ba09-11e9-8753-2ceefd7ec7e9.png)
 
