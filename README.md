@@ -12,12 +12,10 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 1. Software Disponível - ISSABEL
 2. Link para Realizar o Download da ISO - [ISSABEL](https://www.issabel.org/)
 
-<ol>
-  <li>Bootar o Pendrive com - ISSABEL</li>
-  <li>Selecionar Versão 11</li>
-  <li>Na Tela que Tá Demorando Muito Tecle [ESC]</li>
-  <li>Dracut: /# (Digite Exit)</li>
-</ol>
+3. Bootar o Pendrive com - ISSABEL
+4. Selecionar Versão 11
+5. Na Tela que Tá Demorando Muito Tecle [ESC]
+6. Dracut: /# (Digite Exit)
 
 #### Tela de Instalação no Hardware CAMBOX Físico
 
