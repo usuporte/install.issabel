@@ -10,17 +10,16 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 ##### SCRIPTS DESENVOLVIDO PELA EQUIPE DE SUPORTE CAM TECNOLOGIA
 
 1. Software Disponível, Link para Realizar o [Download Issabel ISO](https://www.issabel.org/)
-
-3. Bootar o Pendrive com - ISSABEL
-4. Selecionar Versão 11
-5. Na Tela que Tá Demorando Muito Tecle [ESC]
-6. Dracut: /# (Digite Exit)
+2. Bootar o Pendrive com - ISSABEL
+3. Selecionar Versão 11
+4. Na Tela que Tá Demorando Muito Tecle [ESC]
+5. Dracut: /# (Digite Exit)
 
 #### Tela de Instalação no Hardware CAMBOX Físico
 
 - 01 - Na Tela Inicial da Instalação Issabel, Selecione "Install" e pressione o botão "Enter";
 
-<img align="center" width="640" height="480" src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png">
+![01 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png)
 
 - 02 - Na Tela de Boas Vindas do Issabel, Localize o Idioma que quer Usar, Nesse Caso o Idioma Selecionado é "Português (Brasil)" e pressione o botão "Continuar";
 
