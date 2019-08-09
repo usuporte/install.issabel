@@ -99,21 +99,16 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 
 
-# >> >> 04 >> Destino Instalação: Desmarcar PenDrive, Marcar Configurar Automaticamente, Recuperar Espaço
-# >> >> 05 >> Recuperar Espaço: Apagar Tudo e Recuperar Espaço
-
-- 06 Rede e Nome (Ativa eth0 => ON)
-- 07 Senha Raiz e do MariaDB (Senha do root => mysql.admin)
-- 08 Toda vez que for executado esse comando será obrigatorio realizar o processo 
-- 08 # sudo yum update -y && sudo yum upgrade -y
-# >> >> 09 >> Configuração SELINUX e Firewall 
-# >> >> >> 08.02 >> # vim /etc/selinux/config ou sudo systemctl disable firewalld 
-# >> >> >> >> Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
+Toda vez que for executado esse comando será obrigatorio realizar o processo 
+sudo yum update -y && sudo yum upgrade -y
+Configuração SELINUX e Firewall 
+vim /etc/selinux/config ou sudo systemctl disable firewalld 
+Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
 
 # Reiniciar o Servidor Após a Configuraço
-# >> >> 10 >> Criação de Usuário root (cam) 
-# >> >> >> 10.01 >> # vim /etc/sudoers (cam       ALL=(ALL)       ALL)
-# >> >> 11 >> Configuração da Rede
-# >> >> >> 11.01 >> # systemctl enable dhcpd && /etc/init.d/netword restart
+Criação de Usuário root (cam) 
+ vim /etc/sudoers (cam       ALL=(ALL)       ALL)
+Configuração da Rede
+systemctl enable dhcpd && /etc/init.d/netword restart
 
 
