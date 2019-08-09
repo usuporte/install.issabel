@@ -46,7 +46,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![07 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738488-cfc7e700-ba08-11e9-9427-cde9796a65bc.png)
 
-- 08 - Tela Seleção de Software;
+- 08 - Tela Seleção de Software, Selecionar Versão 11;
 
 ![08 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738498-d5bdc800-ba08-11e9-9a39-6ea31bb41b7c.png)
 
