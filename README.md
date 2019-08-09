@@ -97,17 +97,17 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![21 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738599-0ef63800-ba09-11e9-94c4-ae34274bfce1.png)
 
-- Toda vez que for executado esse comando será obrigatorio realizar o processo 
-* sudo yum update -y && sudo yum upgrade -y
+* Toda vez que for executado esse comando será obrigatorio realizar o processo 
+* **sudo yum update -y && sudo yum upgrade -y**
 
-- Configuração SELINUX e Firewall 
-* vim /etc/selinux/config ou sudo systemctl disable firewalld 
+* Configuração SELINUX e Firewall 
+* **vim /etc/selinux/config OU sudo systemctl disable firewalld ** 
 
-- Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
+* Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # iptables -F
 
 #### Reiniciar o Servidor Após a Configuraço
 
-- Configuração da Rede
-* systemctl enable dhcpd && /etc/init.d/netword restart
+* Configuração da Rede
+* **systemctl enable dhcpd && /etc/init.d/netword restart**
 
 
