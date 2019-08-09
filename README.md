@@ -93,7 +93,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![20 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738594-0c93de00-ba09-11e9-9524-860e56612852.png)
 
-- 21 - Tela add # cam     ALL=(ALL)     ALL
+- 21 - Na Tela de Edição **/etc/sudoers**, na **Linha 77,1 90%**,  Adicione  # **cam     ALL=(ALL)     ALL**;
 
 ![21 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738599-0ef63800-ba09-11e9-94c4-ae34274bfce1.png)
 
