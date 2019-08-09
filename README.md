@@ -100,43 +100,43 @@ O foco da **CAM Tecnologia** ao realizar revenda de equipamentos é oferecer a s
 - 15 - Na Tela **Criar Usuário**, Informe o Usuário Padrão, Nome Completo, **Cam Tecnologia**, o Nome do Usuário, **cam**, a Senha, **PADRÃO DA CAM**;
 
 <p align="center">
-![15 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738569-ff76ef00-ba08-11e9-9b0e-074c63c0f24b.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738569-ff76ef00-ba08-11e9-9b0e-074c63c0f24b.png" width="800" height="600" title="Criar Usuário">
 </p>
 
 - 16 - Na Tela **Compiling GeoIP**, Só Aguardar;
 
 <p align="center">
-![16 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738574-0271df80-ba09-11e9-9cac-fd5e7c5fa588.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738574-0271df80-ba09-11e9-9cac-fd5e7c5fa588.png" width="800" height="600" title="Compiling GeoIP">
 </p>
 
 - 17 - Na Tela **Configuração MariaDB**, Adicione a Senha, **mysql.root**, e Pressione o Botão **Aceitar**;
 
 <p align="center">
-![17 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738578-04d43980-ba09-11e9-8a26-d33571f1dd2b.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738578-04d43980-ba09-11e9-8a26-d33571f1dd2b.png" width="800" height="600" title="Configuração MariaDB">
 </p>
 
 - 18 - Na Tela **Configuração IssabelPBX**, Adicione a Senha **admin**, e Pressione o Botão **Aceitar**;
 
 <p align="center">
-![18 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738584-07369380-ba09-11e9-8753-2ceefd7ec7e9.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738584-07369380-ba09-11e9-8753-2ceefd7ec7e9.png" width="800" height="600" title="Configuração IssabelPBX">
 </p>
 
 - 19 - Na Tela **Acesso a Máquina**, Informe o Usuário **root**, e a Senha **cambox.root**, e Pressione o Botão **Enter**;
 
 <p align="center">
-![19 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738587-0998ed80-ba09-11e9-989e-823556d16893.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738587-0998ed80-ba09-11e9-989e-823556d16893.png" width="800" height="600" title="Acesso a Máquina">
 </p>
 
 - 20 - Na Tela **Terminal**, Usuário root # **sudo vim /etc/sudoers**;
 
 <p align="center">
-![20 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738594-0c93de00-ba09-11e9-9524-860e56612852.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738594-0c93de00-ba09-11e9-9524-860e56612852.png" width="800" height="600" title="Terminal">
 </p>
 
 - 21 - Na Tela de Edição **/etc/sudoers**, na **Linha 77,1 90%**,  Adicione  # **cam     ALL=(ALL)     ALL**, Depois de Adiciona o Usuário, e Pressione o Botão **ESC**, e logo para Salvar, Pressione o Botão **:wq**, e Pressione o Botão **Enter**;
 
 <p align="center">
-![21 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738599-0ef63800-ba09-11e9-94c4-ae34274bfce1.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738599-0ef63800-ba09-11e9-94c4-ae34274bfce1.png" width="800" height="600" title="vim /etc/sudoers">
 </p>
 
 * Toda vez que for executado esse comando será obrigatorio realizar o processo 
