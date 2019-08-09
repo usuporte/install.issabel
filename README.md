@@ -1,4 +1,4 @@
-<img align="left" width="300" height="100" src="https://user-images.githubusercontent.com/16817969/62732643-43fb8e00-b9fb-11e9-8f04-af29c1f6d8bb.jpg">
+<img align="right" width="300" height="100" src="https://user-images.githubusercontent.com/16817969/62732643-43fb8e00-b9fb-11e9-8f04-af29c1f6d8bb.jpg">
 
 ### INSTALAÇÃO CAMBOX - CAM TECNOLOGIA EIRELI -ME 
 
@@ -10,10 +10,6 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 ##### SCRIPTS DESENVOLVIDO PELA EQUIPE DE SUPORTE CAM TECNOLOGIA
 
 1. Software Disponível, Link para Realizar o [Download Issabel ISO](https://www.issabel.org/)
-2. Bootar o Pendrive com - ISSABEL
-3. Selecionar Versão 11
-4. Na Tela que Tá Demorando Muito Tecle [ESC]
-5. Dracut: /# (Digite Exit)
 
 #### Tela de Instalação no Hardware CAMBOX Físico
 
