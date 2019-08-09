@@ -53,15 +53,15 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![10 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738523-e1a98a00-ba08-11e9-9e7d-7c4d37474883.png)
 
-- 11 - Tela Kdump;
+- 11 - Na Tela **Kdump**, Não Precisa Realizar Configurações, e Pressione o Botão **Finalizado**;
 
 ![11 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738534-e8d09800-ba08-11e9-93ff-28462533baf9.png)
 
-- 12 - Tela Política de Segurança;
+- 12 - Na Tela **Política de Segurança**, Não Precisa Realizar Configurações, e Pressione o Botão **Finalizado**;
 
 ![12 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738539-ecfcb580-ba08-11e9-9f10-334d4c6aa6b0.png)
 
-- 13 - Tela Configuração de Usuário;
+- 13 - Na Tela **Configuração de Usuário**;
 
 ![13 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738552-f4bc5a00-ba08-11e9-93db-ee36692e45dd.png)
 
