@@ -16,26 +16,25 @@ O foco da **CAM Tecnologia** ao realizar revenda de equipamentos é oferecer a s
 - 01 - Na Tela Inicial da Instalação Issabel, Selecione **Install**, e Pressione o Botão **Enter**;
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png" width="800" height="600">
+<img src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png" width="800" height="600" title="Instalação Issabel">
 </p>
 
 - 02 - Na Tela **Seja Bem Vindo ao Issabel 4**, Localize o Idioma que quer Usar, Nesse Caso o Idioma Selecionado é **Português -> Portuguese**, **Português (Brasil)** e pressione o botão **Continuar**;
 
 <p align="center">
-<img src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png" width="800" height="600">
-![02 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png)
+<img src="https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png" width="800" height="600" title="Seja Bem Vindo ao Issabel 4">
 </p>
 
 - 03 - Na Tela de **Resumo da Instalação**, Selecione a Opção Desejada;
 
 <p align="center">
-![03 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738085-cf7b1c00-ba07-11e9-8239-cc8d7281f151.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738085-cf7b1c00-ba07-11e9-8239-cc8d7281f151.png" width="800" height="600" title="Resumo da Instalação">
 </p>
 
 - 04 - Na Tela **Data e Hora**, Vamos configurar a Região que Nesse Caso Selecione **Américas**, Cidade **São Paulo**, Hora da Rede **Habilitado**, Verificar se a Data e a Hora **Habilitar, 24-horas** estão Corretas e Pressione o Botão **Finalizado**;
 
 <p align="center">
-![04 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738469-c179cb00-ba08-11e9-949b-d2363a800467.png)
+<img src="https://user-images.githubusercontent.com/16817969/62738469-c179cb00-ba08-11e9-949b-d2363a800467.png" width="800" height="600" title="Data e Hora">
 </p>
 
 - 05 - Na Tela **Layout do Teclado**, Verificar qual Teclado está Selecionado, Nesse Caso, Selecionamos **Português (Brasil)**, e Pressione o Botão **Finalizado**;
