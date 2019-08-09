@@ -22,7 +22,9 @@ O foco da **CAM Tecnologia** ao realizar revenda de equipamentos é oferecer a s
 - 02 - Na Tela **Seja Bem Vindo ao Issabel 4**, Localize o Idioma que quer Usar, Nesse Caso o Idioma Selecionado é **Português -> Portuguese**, **Português (Brasil)** e pressione o botão **Continuar**;
 
 <p align="center">
+<img src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png" width="800" height="600">
 ![02 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png)
+</p>
 
 - 03 - Na Tela de **Resumo da Instalação**, Selecione a Opção Desejada;
 
