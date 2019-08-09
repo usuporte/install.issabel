@@ -107,7 +107,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 #### Reiniciar o Servidor Após a Configuraço
 
-> Configuração da Rede
-> Systemctl enable dhcpd && /etc/init.d/netword restart
+* Configuração da Rede
+* Systemctl enable dhcpd && /etc/init.d/netword restart
 
 
