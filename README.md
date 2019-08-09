@@ -25,15 +25,15 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![02 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png)
 
-- 03 - Tela de Resumo da Instalação;
+- 03 - Na Tela de Resumo da Instalação, Selecione;
 
 ![03 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738085-cf7b1c00-ba07-11e9-8239-cc8d7281f151.png)
 
-- 04 - Tela Data e Hora;
+- 04 - Na Tela Data e Hora, Vamos configurar a Região que Nesse Caso Selecione "Américas", Cidade "São Paulo", Hora da Rede "Habilitado", Verificar se a Data e a Hora "Habilitar, 24-horas" estão Corretas e pressione o botão "Finalizado";
 
 ![04 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738469-c179cb00-ba08-11e9-949b-d2363a800467.png)
 
-- 05 - Tela Layout do Teclado;
+- 05 - Na Tela Layout do Teclado, Verificar qual Teclado está Selecionado, Nesse Caso, Selecionamos "Português (Brasil)", e pressione o botão "Finalizado";
 
 ![05 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738476-c76fac00-ba08-11e9-8f90-2ec3ce07eded.png)
 
