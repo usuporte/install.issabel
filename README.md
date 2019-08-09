@@ -77,11 +77,11 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![16 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738574-0271df80-ba09-11e9-9cac-fd5e7c5fa588.png)
 
-- 17 - Na Tela **Configuração MariaDB** Senha, **mysql.root**, e Pressione o Botão **Aceitar**;
+- 17 - Na Tela **Configuração MariaDB**, Adicione a Senha, **mysql.root**, e Pressione o Botão **Aceitar**;
 
 ![17 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738578-04d43980-ba09-11e9-8a26-d33571f1dd2b.png)
 
-- 18 - Na Tela **Configuração IssabelPBX**, Senha **admin**, e Pressione o Botão **Aceitar**;
+- 18 - Na Tela **Configuração IssabelPBX**, Adicione a Senha **admin**, e Pressione o Botão **Aceitar**;
 
 ![18 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738584-07369380-ba09-11e9-8753-2ceefd7ec7e9.png)
 
