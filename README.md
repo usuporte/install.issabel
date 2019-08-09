@@ -14,8 +14,9 @@ O foco da **CAM Tecnologia** ao realizar revenda de equipamentos é oferecer a s
 #### Tela de Instalação no Hardware CAMBOX Físico, Utilizando um PenDrive Bootavel
 
 - 01 - Na Tela Inicial da Instalação Issabel, Selecione **Install**, e Pressione o Botão **Enter**;
-
+<p align="center">
 <img src="https://user-images.githubusercontent.com/16817969/62736589-15ce7c00-ba04-11e9-9190-7450d7023fc4.png" width="800" height="600">
+</p>
 
 - 02 - Na Tela **Seja Bem Vindo ao Issabel 4**, Localize o Idioma que quer Usar, Nesse Caso o Idioma Selecionado é **Português -> Portuguese**, **Português (Brasil)** e pressione o botão **Continuar**;
 
