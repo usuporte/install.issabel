@@ -9,8 +9,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
               
 ##### SCRIPTS DESENVOLVIDO PELA EQUIPE DE SUPORTE CAM TECNOLOGIA
 
-1. Software Disponível - ISSABEL
-2. Link para Realizar o Download da ISO - [ISSABEL](https://www.issabel.org/)
+1. Software Disponível, Link para Realizar o [Download Issabel ISO](https://www.issabel.org/)
 
 3. Bootar o Pendrive com - ISSABEL
 4. Selecionar Versão 11
