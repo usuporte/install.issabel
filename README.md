@@ -99,10 +99,8 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 * Toda vez que for executado esse comando será obrigatorio realizar o processo 
 * **sudo yum update -y && sudo yum upgrade -y**
-
 * Configuração SELINUX e Firewall 
 * **sudo vim /etc/selinux/config** OU **sudo systemctl disable firewalld** 
-
 * Esse comando é para desabilitar o Firewall e quando reiniciar a máquina não precisar usar o # **iptables -F**
 
 #### Reiniciar o Servidor Após a Configuraço
