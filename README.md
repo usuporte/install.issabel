@@ -21,7 +21,7 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![02 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62737291-d30da380-ba05-11e9-8fb8-c175c0987884.png)
 
-- 03 - Na Tela de Resumo da Instalação, Selecione;
+- 03 - Na Tela de **Resumo da Instalação**, Selecione a Opção Desejada;
 
 ![03 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738085-cf7b1c00-ba07-11e9-8239-cc8d7281f151.png)
 
@@ -45,11 +45,11 @@ O foco da CAM Tecnologia ao realizar revenda de equipamentos é oferecer a seus 
 
 ![08 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738498-d5bdc800-ba08-11e9-9a39-6ea31bb41b7c.png)
 
-- 09 - Tela Destinaço da Instalação;
+- 09 - Na Tela **Destinaço da Instalação**, Selecione o Disco Desejado, Nesse Caso o Disco Selecionado é **sda**, e Pressione o Botão **Finalizado**;
 
 ![09 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738507-da827c00-ba08-11e9-83fd-180663832c0c.png)
 
-- 10 - Tela Rede e Nome do Host;
+- 10 - Na Tela **Rede e Nome do Host**, Vamos Verificar a Rede **eth0** se Está **Habilitada**, Pressine o Botão **Configurar** para IP **Static** ou Deixa no Modo **DHCP**, Já o **Nome do host**, **issabel.local** e Pressione o Botão **Aplicar**, e Pressione o Botão **Finalizado**;
 
 ![10 Tela de Instalação ISSABEL](https://user-images.githubusercontent.com/16817969/62738523-e1a98a00-ba08-11e9-9e7d-7c4d37474883.png)
 
