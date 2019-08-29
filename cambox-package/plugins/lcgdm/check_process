@@ -1,0 +1,217 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_process
+#
+# DESCRIPTION : Checks one or several processes performance data 
+#
+# AUTHORS :     Alejandro.Alvarez.Ayllon@cern.ch
+#
+##############################################################################
+
+import commands
+import os
+import pwd
+from lcgdmcommon import *
+
+class process:
+  """
+  Process information
+  """
+  
+  def __init__(self, comm):
+    """
+    Constructor
+    """
+    self.comm = comm
+    self.pid  = []
+    self.cpu  = 0
+    self.mem  = 0
+    self.thr  = 0
+    self.conn = 0
+    self.fd   = 0
+
+  def __str__(self):
+    """
+    String representation for performance
+    """
+    procname = str.replace(self.comm, '.', '-')
+    return "'%s instances'=%d '%s cpu'=%.2f%% '%s mem'=%.2f%% '%s thr'=%d '%s conn'=%d '%s fd'=%d" % \
+              (procname, len(self.pid),
+               procname, self.cpu, 
+               procname, self.mem,
+               procname, self.thr,
+               procname, self.conn,
+               procname, self.fd)
+
+class check_process:
+  "Checks a process activity"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-PROC"
+
+
+  # Defaults
+  DEFAULT_WARNING  = "10,80%,50%,100,100,800"
+  DEFAULT_CRITICAL = "20,95%,80%,200,200,950"
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"p:": "processes=",
+                         "w:": "warning=",
+                         "c:": "critical="}
+
+  # Specific usage information
+  __usage__ = """
+\t-p, --processes\tA list of processes separated by commas (e.g. gridftp,rfiod)
+\t-w, --warning\tWarning limits. It is a tuple with the values of instances,cpu%%,mem%%,threads,connections,descriptors. Default: %s
+\t-c. --critical\tCritical limits. Same format as warning. Default: %s
+
+For a given process (specified with -p option), the probe should return the following information:
+
+\tprocess instance:\tNumber of running instance
+\tprocess cpu:\t\tPercentage of CPU usage dedicated
+\tprocess mem:\t\tPercentage of memory dedicated
+\tprocess thread:\t\tNumber of running thread 
+\tprocess conn:\t\tNumber of connection opened
+\tprocess fd:\t\tNumber of file descriptor associated 
+
+Description of work executed by the probe:
+
+\t1. Get informations about process activity using ps command
+\t2. Retrieve basic informations about the process:
+\t\tNumber of instance
+\t\tCPU / memory usage dedicated to it
+\t\tNumber of running thread
+\t3. Execute a "lsof" command to figure out how many network connection are currently opened for this process
+\t4. Execute a "lsof" command to figure out how many file descriptor are currently linked to this process
+\t5. Return values to nagios
+\t\tWarning or critical alerts are triggered if there is too much ressources dedicated to one process
+
+""" % (DEFAULT_WARNING, DEFAULT_CRITICAL)
+
+  # Methods
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    self.proc_info = {}
+    self.pnames = opt["processes"].split(',')
+
+    if "warning" in opt:
+      self.warning = opt["warning"].split(",")
+    else:
+      self.warning = self.DEFAULT_WARNING.split(",")
+    if "critical" in opt:
+      self.critical = opt["critical"].split(",")
+    else:
+      self.critical = self.DEFAULT_CRITICAL.split(",")
+
+    if len(self.critical) < 6:
+      raise ValueError("Six values are needed for --critical")
+    if len(self.warning) < 6:
+      raise ValueError("Six values are needed for --warning")
+
+    for i in range(6):
+      self.critical[i] = real_value(self.critical[i], 100)
+      self.warning[i]  = real_value(self.warning[i], 100)
+
+  def check_margin(self, index, value, message, exit, msg):
+    """
+    Checks the margin and sets the exit code and message properly
+    """
+    if value > self.critical[index]:
+      exit  = EX_CRITICAL
+      msg  += "(C) %s " % message
+    if value > self.warning[index]:
+      if exit != EX_CRITICAL: exit = EX_WARNING
+      msg += "(W) %s " % message
+
+    return (exit, msg)
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+    (status, output) = commands.getstatusoutput("ps -o \"comm pid %%cpu %%mem thcount\" -C %s" % ','.join(self.pnames))
+    if status != 0:
+      return (EX_UNKNOWN, "Could not execute ps", None)
+
+    for line in output.split('\n')[1:]:
+      # Returned by ps
+      (comm, pid, cpu, mem, threads) = line.split()
+
+      if not comm in self.proc_info:
+        proc = process(comm)
+        self.proc_info[comm] = proc
+      else:
+        proc = self.proc_info[comm]
+
+      proc.pid.append(int(pid))
+      proc.cpu += float(cpu)
+      proc.mem += float(mem)
+      proc.thr += int(threads)
+
+      # Network connections
+      (status, lsof_out) = commands.getstatusoutput("sudo -n /usr/sbin/lsof -a -i4 -i6 -p %d" % int(pid))
+      if status == 0:
+        proc.conn += len(lsof_out.split('\n')) - 1
+      else:
+        debug("Could not retrieve sockets for %s (%d): Maybe died or sudo not configured properly" % (proc.comm, int(pid)))
+
+      # File descriptors
+      (status, lsof_out) = commands.getstatusoutput("sudo -n /usr/sbin/lsof -a -d 0-99999 -p %d" % int(pid))
+      if status == 0:
+        proc.fd = len(lsof_out.split('\n')) - 1
+      else:
+        debug("Could not retrieve file descriptors for %s (%d): Maybe died or sudo not configured properly" % (proc.comm, int(pid)))
+
+    # Performance
+    performance = " ".join([ str(proc) for proc in self.proc_info.values() ])
+
+    # Check margins
+    msg  = ""
+    exit = EX_OK
+
+    for proc in self.proc_info.values():
+      instances = len(proc.pid)
+
+      (exit, msg) = self.check_margin(0, instances, "%s has %d instances"       % (proc.comm, instances), exit, msg)
+      (exit, msg) = self.check_margin(1, proc.cpu,  "%s CPU usage is %.2f%%"    % (proc.comm, proc.cpu),  exit, msg)
+      (exit, msg) = self.check_margin(2, proc.mem,  "%s memory usage is %.2f%%" % (proc.comm, proc.mem),  exit, msg)
+      (exit, msg) = self.check_margin(3, proc.thr,  "%s has %d threads"         % (proc.comm, proc.thr),  exit, msg)
+      (exit, msg) = self.check_margin(4, proc.conn, "%s has %d connections"     % (proc.comm, proc.conn), exit, msg)
+      (exit, msg) = self.check_margin(5, proc.fd,   "%s is using %d file descriptors" % (proc.comm, proc.fd), exit, msg)
+
+    if exit == EX_OK:
+      msg = "All parameters OK"
+
+    # End
+    return (exit, msg, performance)
+
+
+# When called directly
+if __name__ == "__main__":
+  run(check_process)
+

@@ -1,0 +1,875 @@
+#Khomp configuration file
+#Please note that indentation denotes scope but TABs are not permitted
+
+#All fields are case sensitive
+---
+
+Version: 1
+Patterns:
+  - Name: Portability tone
+    State: Ringing
+    Classification: Portability Identification
+    Pattern:
+      - Tone: 1400
+        Min: 140
+        Max: 208
+      - Tone: 1320
+        Min: 192
+        Max: 208
+      - Tone: 1400
+        Min: 192
+        Max: 208
+
+  - Name: Fax 1100Hz
+    State: Connected
+    Classification: Fax
+    Pattern: 
+      - Tone: 1100
+        Min: 100
+        Max: 3000
+      - Tone: Silence
+        Min: 50
+        Max: 2000
+
+  - Name: Fax 1800Hz
+    State: Connected
+    Classification: Fax
+    Pattern: 
+      - Tone: 1800
+        Min: 100 
+        Max: 3000 
+      - Tone: Silence
+        Min: 50
+        Max: 2000
+
+  - Name: Fax 2100Hz
+    State: Connected
+    Classification: Fax
+    Pattern: 
+      - Tone: 2100
+        Min: 100
+        Max: 3000
+      - Tone: Silence
+        Min: 50
+        Max: 2000
+
+  - Name: Phone blocked for this type of call
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Silence
+        Min: 128
+        Max: 224
+      - Tone: Voice
+        Min: 80
+        Max: 88
+      - Tone: Silence
+        Min: 72
+        Max: 88
+      - Tone: Voice
+        Min: 200
+        Max: 208
+      - Tone: Silence
+        Min: 72
+        Max: 88
+      - Tone: Voice
+        Min: 456
+        Max: 472
+
+
+  - Name: Number called is off
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Silence
+        Min: 72
+        Max: 96
+      - Tone: Voice
+        Min: 800
+        Max: 848
+      - Tone: Silence
+        Min: 88
+        Max: 96
+      - Tone: Voice
+        Min: 144
+        Max: 168	
+      - Tone: Silence
+        Min: 104
+        Max: 112
+      - Tone: Voice
+        Min: 376
+        Max: 1024
+
+  - Name: Number does not receive calls - audio begin
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Silence
+        Min: 592
+        Max: 616
+      - Tone: Voice
+        Min: 88
+        Max: 104
+      - Tone: Silence
+        Min: 104
+        Max: 112
+      - Tone: Voice
+        Min: 480
+        Max: 504
+      - Tone: Silence
+        Min: 112
+        Max: 128
+      - Tone: Voice
+        Min: 88
+        Max: 104
+      - Tone: Silence
+        Min: 96
+        Max: 112
+
+  - Name: Number does not receive calls - audio end
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 608
+        Max: 624
+      - Tone: Silence
+        Min: 64
+        Max: 80
+      - Tone: Voice
+        Min: 560
+        Max: 584
+      - Tone: Silence
+        Min: 80
+        Max: 104
+      - Tone: Voice
+        Min: 496
+        Max: 520
+      - Tone: Silence
+        Min: 104
+        Max: 120
+      - Tone: Voice
+        Min: 264
+        Max: 288
+
+  - Name: The cellphone is out of coverage area
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 504
+        Max: 528
+      - Tone: Silence
+        Min: 72
+        Max: 88
+      - Tone: Voice
+        Min: 464
+        Max: 488
+      - Tone: Silence
+        Min: 64
+        Max: 72
+      - Tone: Voice
+        Min: 768
+        Max: 784
+      - Tone: Silence
+        Min: 152
+        Max: 168
+
+  - Name: Unable to receive at the moment - audio begin
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 192
+        Max: 296
+      - Tone: 300
+        Min: 50
+        Max: 88
+      - Tone: Voice
+        Min: 144
+        Max: 208
+      - Tone: Silence
+        Min: 50
+        Max: 96
+      - Tone: Voice
+        Min: 208
+        Max: 248
+      - Tone: Silence
+        Min: 104
+        Max: 144
+      - Tone: Voice
+        Min: 432
+        Max: 520
+      - Tone: Silence
+        Min: 288
+        Max: 344
+
+  - Name: Unable to receive at the moment - audio end
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Silence
+        Min: 136
+        Max: 160
+      - Tone: Voice
+        Min: 232
+        Max: 280
+      - Tone: Silence
+        Min: 72
+        Max: 98
+      - Tone: Voice
+        Min: 640
+        Max: 696
+      - Tone: Silence
+        Min: 104
+        Max: 192
+      - Tone: Voice
+        Min: 200
+        Max: 280
+
+  - Name: Number inaccessible - audio begin
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 432
+        Max: 472
+      - Tone: Silence
+        Min: 96
+        Max: 136
+      - Tone: Voice
+        Min: 136
+        Max: 208
+      - Tone: Silence
+        Min: 88
+        Max: 152
+      - Tone: Voice
+        Min: 424
+        Max: 512
+      - Tone: Silence
+        Min: 136
+        Max: 176
+      - Tone: Voice
+        Min: 344
+        Max: 384
+      - Tone: Silence
+        Min: 88
+        Max: 144
+
+  - Name: Number inaccessible - audio end
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 344
+        Max: 376
+      - Tone: Silence
+        Min: 120
+        Max: 136
+      - Tone: Voice
+        Min: 184
+        Max: 208
+      - Tone: Silence
+        Min: 96
+        Max: 112
+      - Tone: Voice
+        Min: 488
+        Max: 512
+      - Tone: Silence
+        Min: 168
+        Max: 184
+
+  - Name: Number unavailable - audio middle
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 64
+        Max: 144
+      - Tone: Silence
+        Min: 50
+        Max: 88
+      - Tone: Voice
+        Min: 72
+        Max: 112
+      - Tone: Silence
+        Min: 96
+        Max: 144
+      - Tone: Voice
+        Min: 104
+        Max: 280
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Number unavailable - audio end
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 192
+        Max: 280
+      - Tone: Silence
+        Min: 152
+        Max: 192
+      - Tone: Voice
+        Min: 336
+        Max: 448
+      - Tone: Silence
+        Min: 136
+        Max: 176
+      - Tone: Voice
+        Min: 64
+        Max: 120
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Out of service
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 192
+        Max: 216
+      - Tone: Silence
+        Min: 96
+        Max: 112
+      - Tone: Voice
+        Min: 88
+        Max: 104
+      - Tone: Silence
+        Min: 96
+        Max: 112
+      - Tone: 300
+        Min: 96
+        Max: 168
+      - Tone: Voice
+        Min: 544
+        Max: 568
+      - Tone: Silence
+        Min: 50
+        Max: 280
+
+  - Name: Claro - Cannot complete call
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Silence
+        Min: 36
+        Max: 76
+      - Tone: Voice
+        Min: 164
+        Max: 212
+      - Tone: Silence
+        Min: 108
+        Max: 140
+      - Tone: Voice
+        Min: 316
+        Max: 348
+      - Tone: Silence
+        Min: 92
+        Max: 124
+      - Tone: Voice
+        Min: 244
+        Max: 284
+
+  - Name: Claro - Cannot call - audio begin
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 464
+        Max: 512
+      - Tone: Silence
+        Min: 248
+        Max: 296
+      - Tone: Voice
+        Min: 208
+        Max: 336
+      - Tone: Silence
+        Min: 64
+        Max: 104
+      - Tone: Voice
+        Min: 480
+        Max: 2624
+
+  - Name: Claro - Cannot call - audio middle
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 808
+        Max: 864
+      - Tone: Silence
+        Min: 50
+        Max: 120
+      - Tone: Voice
+        Min: 256
+        Max: 296
+      - Tone: Silence
+        Min: 320
+        Max: 376
+
+  - Name: Claro - Cannot call - audio end
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Silence
+        Min: 120
+        Max: 168
+      - Tone: 300
+        Min: 88
+        Max: 192
+      - Tone: Voice
+        Min: 1664
+        Max: 1792
+      - Tone: Silence
+        Min: 160
+        Max: 232
+      - Tone: Voice
+        Min: 464
+        Max: 536
+      - Tone: Silence
+        Min: 88
+        Max: 160
+
+  - Name: To complete this call
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 456
+        Max: 488
+      - Tone: Silence
+        Min: 104
+        Max: 120
+      - Tone: Voice
+        Min: 216
+        Max: 232
+      - Tone: Silence
+        Min: 72
+        Max: 80
+      - Tone: Voice
+        Min: 72
+        Max: 88
+      - Tone: Silence
+        Min: 72
+        Max: 88
+
+  - Name: This phone is blocked
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 176
+        Max: 192
+      - Tone: Silence
+        Min: 88
+        Max: 96
+      - Tone: Voice
+        Min: 296
+        Max: 312
+      - Tone: Silence
+        Min: 112
+        Max: 120
+      - Tone: Voice
+        Min: 672
+        Max: 688
+      - Tone: Silence
+        Min: 72
+        Max: 88
+
+  - Name: Busy tone
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Call Progress
+        Min: 232
+        Max: 280
+      - Tone: Silence
+        Min: 232
+        Max: 280
+      - Tone: Call Progress
+        Min: 232
+        Max: 280
+      - Tone: Silence
+        Min: 232
+        Max: 280
+      - Tone: Call Progress
+        Min: 232
+        Max: 280
+
+  - Name: Voice mail 300Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: 300
+        Min: 160
+        Max: 260
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Voice mail 720Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: 720
+        Min: 160
+        Max: 1000
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Voice mail 1000Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: 1000
+        Min: 248
+        Max: 1000 
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Forward call - Female
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 624
+        Max: 688
+      - Tone: Silence
+        Min: 72
+        Max: 104
+      - Tone: Voice
+        Min: 72
+        Max: 112
+      - Tone: Silence
+        Min: 96
+        Max: 144
+      - Tone: Voice
+        Min: 136
+        Max: 192
+      - Tone: Silence
+        Min: 72
+        Max: 128
+
+  - Name: Vivo - Forward call
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Silence
+        Min: 144
+        Max: 188
+      - Tone: Voice
+        Min: 160
+        Max: 200
+      - Tone: Silence
+        Min: 50
+        Max: 88
+      - Tone: Voice
+        Min: 296
+        Max: 360
+      - Tone: Silence
+        Min: 48
+        Max: 1000
+
+  - Name: Claro - Voice mail 1400Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Silence
+        Min: 400
+        Max: 850
+      - Tone: 1400
+        Min: 120
+        Max: 240
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Claro - Leave a message - audio end
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Silence
+        Min: 56
+        Max: 80
+      - Tone: Voice
+        Min: 72
+        Max: 184
+      - Tone: Silence
+        Min: 104
+        Max: 128
+      - Tone: Voice
+        Min: 272
+        Max: 312
+      - Tone: Silence
+        Min: 64
+        Max: 112
+      - Tone: Voice
+        Min: 272
+        Max: 312
+      - Tone: Silence
+        Min: 96
+        Max: 120
+      - Tone: Voice
+        Min: 200
+        Max: 312
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Oi - Record your message - audio begin
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 104
+        Max: 328
+      - Tone: Silence
+        Min: 64
+        Max: 96
+      - Tone: Voice
+        Min: 280
+        Max: 328
+      - Tone: Silence
+        Min: 80
+        Max: 120
+      - Tone: Voice
+        Min: 408
+        Max: 448
+      - Tone: Silence
+        Min: 64
+        Max: 1000
+
+  - Name: Oi - Record your message - audio middle
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 80
+        Max: 160
+      - Tone: Silence
+        Min: 72
+        Max: 120
+      - Tone: Voice
+        Min: 184
+        Max: 248
+      - Tone: Silence
+        Min: 50
+        Max: 72
+      - Tone: Voice
+        Min: 136
+        Max: 200
+      - Tone: Silence
+        Min: 72
+        Max: 120
+
+  - Name: Oi - Record your message - audio end
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 184
+        Max: 232
+      - Tone: Silence
+        Min: 56
+        Max: 96
+      - Tone: Voice
+        Min: 192
+        Max: 256
+      - Tone: Silence
+        Min: 72
+        Max: 120
+      - Tone: Voice
+        Min: 296
+        Max: 376
+      - Tone: Silence
+        Min: 320
+        Max: 440
+
+  - Name: Tim - Busy number
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 296
+        Max: 352
+      - Tone: Silence
+        Min: 88
+        Max: 120
+      - Tone: Voice
+        Min: 104
+        Max: 120
+      - Tone: Silence
+        Min: 96
+        Max: 120
+      - Tone: Voice
+        Min: 288
+        Max: 424
+
+  - Name: Tim - Leave a message - audio begin
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 96
+        Max: 128
+      - Tone: 300
+        Min: 104
+        Max: 128
+      - Tone: Voice
+        Min: 104
+        Max: 136
+      - Tone: Silence
+        Min: 112
+        Max: 136
+      - Tone: Voice
+        Min: 200
+        Max: 224
+      - Tone: Silence
+        Min: 88
+        Max: 112
+      - Tone: Voice
+        Min: 72
+        Max: 88
+      - Tone: Silence
+        Min: 168
+        Max: 360
+
+  - Name: Tim - Leave a message - audio end
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 72
+        Max: 128
+      - Tone: Silence
+        Min: 40
+        Max: 88
+      - Tone: Voice
+        Min: 792
+        Max: 840
+      - Tone: Silence
+        Min: 64
+        Max: 104
+      - Tone: Voice
+        Min: 152
+        Max: 200
+      - Tone: Silence
+        Min: 200
+        Max: 248
+      - Tone: Voice
+        Min: 392
+        Max: 432
+
+  - Name: Ring and voice
+    State: Ringing
+    Classification: Ringback Signal
+    Pattern:
+      - Tone: Call Progress
+        Min: 400
+        Max: 1200
+      - Tone: Voice
+        Min: 700
+        Max: 4200
+
+  - Name: Ring
+    State: Ringing
+    Classification: Ringback Signal
+    Pattern:
+      - Tone: Call Progress
+        Min: 650
+        Max: 1100
+      - Tone: Silence
+        Min: 2500
+        Max: 4200
+
+  - Name: Nextel
+    State: Ringing
+    Classification: Forward Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 520 
+        Max: 632
+      - Tone: Silence
+        Min: 112
+        Max: 128
+      - Tone: Voice
+        Min: 648
+        Max: 664
+      - Tone: Silence
+        Min: 56
+        Max: 88
+      - Tone: Voice
+        Min: 208
+        Max: 368
+      - Tone: Silence
+        Min: 1480
+        Max: 1672
+      - Tone: Call Progress
+        Min: 48 
+        Max: 1050
+
+  - Name: Nextel complete
+    State: Ringing
+    Classification: Forward Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 480
+        Max: 640
+      - Tone: Silence
+        Min: 120
+        Max: 264
+      - Tone: Voice
+        Min: 360
+        Max: 376
+      - Tone: Silence
+        Min: 80
+        Max: 96
+      - Tone: 300
+        Min: 32
+        Max: 50
+      - Tone: Voice
+        Min: 48
+        Max: 96
+      - Tone: Silence
+        Min: 48
+        Max: 96
+      - Tone: Voice
+        Min: 320
+        Max: 448
+      - Tone: Silence
+        Min: 280
+        Max: 296
+      - Tone: Voice
+        Min: 128
+        Max: 152
+      - Tone: Silence
+        Min: 56
+        Max: 72
+      - Tone: Voice
+        Min: 984
+        Max: 1000
+      - Tone: Silence
+        Min: 72
+        Max: 80
+      - Tone: Voice
+        Min: 96
+        Max: 112
+      - Tone: Silence
+        Min: 48
+        Max: 72
+      - Tone: Voice
+        Min: 112
+        Max: 144
+      - Tone: Silence
+        Min: 72
+        Max: 104
+      - Tone: Voice
+        Min: 464
+        Max: 1032
+

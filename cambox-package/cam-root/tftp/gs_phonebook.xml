@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?><AddressBook>
+	<Contact>
+		<LastName>UFCCRATEUS</LastName>
+		<FirstName>Secretaria Crateus</FirstName>
+		<Phone>
+			<phonenumber>9701</phonenumber>
+			<accountindex>1</accountindex>
+		</Phone>
+		<Groups>
+			<groupid>2</groupid>
+		</Groups>
+	</Contact>
+
+	<Contact>
+		<LastName>UFCCRATEUS</LastName>
+		<FirstName>Diretoria Crateus</FirstName>
+		<Phone>
+			<phonenumber>9702</phonenumber>
+			<accountindex>1</accountindex>
+		</Phone>
+		<Groups>
+			<groupid>2</groupid>
+		</Groups>
+	</Contact>
+
+	<Contact>
+		<LastName>UFCCRATEUS</LastName>
+		<FirstName>SL Professores TI Crateus</FirstName>
+		<Phone>
+			<phonenumber>9703</phonenumber>
+			<accountindex>1</accountindex>
+		</Phone>
+		<Groups>
+			<groupid>2</groupid>
+		</Groups>
+	</Contact>
+
+	<Contact>
+		<LastName>UFCCRATEUS</LastName>
+		<FirstName>TI Crateus</FirstName>
+		<Phone>
+			<phonenumber>9704</phonenumber>
+			<accountindex>1</accountindex>
+		</Phone>
+		<Groups>
+			<groupid>2</groupid>
+		</Groups>
+	</Contact>
+
+	<Contact>
+		<LastName>UFCCRATEUS</LastName>
+		<FirstName>Gab Coordenadores Crateus</FirstName>
+		<Phone>
+			<phonenumber>9705</phonenumber>
+			<accountindex>1</accountindex>
+		</Phone>
+		<Groups>
+			<groupid>2</groupid>
+		</Groups>
+	</Contact>
+
+	<Contact>
+		<LastName>UFCCRATEUS</LastName>
+		<FirstName>SL Professores ENG Crateus</FirstName>
+		<Phone>
+			<phonenumber>9706</phonenumber>
+			<accountindex>1</accountindex>
+		</Phone>
+		<Groups>
+			<groupid>2</groupid>
+		</Groups>
+	</Contact>
+
+	<Contact>
+		<LastName>UFCCRATEUS</LastName>
+		<FirstName>RT Biblioteca Crateus</FirstName>
+		<Phone>
+			<phonenumber>9707</phonenumber>
+			<accountindex>1</accountindex>
+		</Phone>
+		<Groups>
+			<groupid>2</groupid>
+		</Groups>
+	</Contact>
+</AddressBook>

@@ -1,0 +1,81 @@
+yum install nrpe
+
+yum install nagios-plugins*
+
+vim /etc/nagios/nrpe.cfg
+>>
+log_facility=daemon
+pid_file=/var/run/nrpe/nrpe.pid
+server_port=5666
+nrpe_user=nrpe
+nrpe_group=nrpe
+allowed_hosts=127.0.0.1,10.255.0.1,10.254.0.1
+
+dont_blame_nrpe=1
+allow_bash_command_substitution=0
+debug=0
+command_timeout=60
+connection_timeout=300
+include_dir=/etc/nrpe.d/
+command[check_users]=/usr/lib64/nagios/plugins/check_users -w 5 -c 10
+command[check_load]=/usr/lib64/nagios/plugins/check_load -w 15,10,5 -c 30,25,20
+command[check_disk]=/usr/lib64/nagios/plugins/check_disk -w 20% -c 10% -p /dev/mapper/issabel-root
+command[check_zombie_procs]=/usr/lib64/nagios/plugins/check_procs -w 5 -c 10 -s Z
+command[check_total_procs]=/usr/lib64/nagios/plugins/check_procs -w 200 -c 250
+command[check_uptime]=/usr/lib64/nagios/plugins/check_uptime
+command[check_mem]=/usr/lib64/nagios/plugins/check_mem -w 80 -c 90
+command[check_mysql]=/usr/lib64/nagios/plugins/check_mysql -u root -w $ARG1$ -c $ARG2$ -S
+
+command[check_fail2ban]=/usr/bin/sudo /usr/lib64/nagios/plugins/check_fail2ban
+command[check_iptables_status.sh]=/usr/bin/sudo /usr/lib64/nagios/plugins/check_iptables_status.sh -T $ARG1 -r $ARG2
+command[check_asterisk_channels]=/usr/bin/sudo /usr/lib64/nagios/plugins/check_asterisk_channels.pl
+command[check_asterisk_peers]=/usr/bin/sudo /usr/lib64/nagios/plugins/check_asterisk_peers.pl -p $ARG1$
+command[check_asterisk_uptime]=/usr/bin/sudo /usr/lib64/nagios/plugins/check_asterisk_uptime
+
+# 1006  perl check_asterisk_peers.pl -p 6601
+# 1007  perl check_asterisk_peers.pl -p 6602
+# 1008  perl check_asterisk_peers.pl -p 6603
+# 1009  perl check_asterisk_peers.pl -p 6604
+# 1010  perl check_asterisk_peers.pl -p 6605
+# 1011  perl check_asterisk_channels.pl
+
+<<
+
+cp plugins/* /usr/lib64/nagios/plugins/
+
+chmod 0777 /etc/sudoers
+
+vim /etc/sudoers
+
+>> 
+nrpe      ALL=(ALL)       NOPASSWD: /usr/lib64/nagios/plugins/
+<<
+
+chmod 0440 /etc/sudoers
+
+sudo su - # ("Para teste!")
+
+
+systemctl start nrpe
+
+systemctl enable nrpe
+
+#####################################################################
+
+Os argumentos sao verificados atravez do comando 
+
+#####################################################################
+
+updatedb = para atualizar as copias dos arquivos
+
+#####################################################################
+
+Para alterar as permissoes da pasta quando nao da permissao
+
+chmod +x plugins/*
+
+#####################################################################
+
+Para mudar o proprietario do arquivo
+
+chown -c -R root:root check_fail2ban

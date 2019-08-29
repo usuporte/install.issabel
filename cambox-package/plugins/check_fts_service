@@ -1,0 +1,84 @@
+#!/usr/bin/env python
+import json
+import optparse
+import os
+import pycurl
+import sys
+
+from StringIO import StringIO
+
+# Exit codes (NAGIOS compliant)
+EX_OK = 0
+EX_WARNING = 1
+EX_CRITICAL = 2
+EX_UNKNOWN = 3
+
+
+class FtsProbe:
+    """
+    Checks if the FTS server is up and running using the
+    getVersion call.
+    """
+
+    def __init__(self, argv):
+        parser = optparse.OptionParser(
+            prog=os.path.basename(argv[0]),
+            description=' '.join(self.__doc__.split())
+        )
+
+        parser.add_option('-H', '--host', type='str', default=None, help='FTS Host')
+        parser.add_option('-p', '--port', type=int, default=8446, help='FTS REST Port')
+        parser.add_option('--cert', type=str, default=None, help='User certificate')
+        parser.add_option('--key', type=str, default=None, help='User private key')
+
+        self.options, args = parser.parse_args(args=argv)
+
+        if self.options.host is None:
+            parser.error("-H must be specified")
+
+    def __call__(self):
+        curl = pycurl.Curl()
+        curl.setopt(pycurl.URL, "https://%s:%d" % (self.options.host, self.options.port))
+        curl.setopt(pycurl.CAPATH, '/etc/grid-security/certificates')
+        if self.options.cert:
+            curl.setopt(pycurl.CAINFO, self.options.cert)
+            curl.setopt(pycurl.SSLCERT, self.options.cert)
+        if self.options.key:
+            curl.setopt(pycurl.SSLKEY, self.options.key)
+
+        buffer = StringIO()
+        curl.setopt(pycurl.WRITEFUNCTION, buffer.write)
+
+        try:
+            curl.perform()
+        except pycurl.error, e:
+            return EX_CRITICAL, e[1]
+        except Exception, e:
+            return EX_CRITICAL, str(e)
+
+        if curl.getinfo(pycurl.RESPONSE_CODE) != 200:
+            return EX_CRITICAL, "Got %d" % curl.getinfo(pycurl.RESPONSE_CODE)
+
+        try:
+            resp = json.loads(buffer.getvalue())
+            version = '.'.join(map(str, resp["api"].values()))
+        except Exception, e:
+            return EX_CRITICAL, "Response is malformed (%s)" % str(e)
+
+        return EX_OK, "FTS %s" % version
+
+
+if __name__ == '__main__':
+    probe = FtsProbe(sys.argv)
+    (status, msg) = probe()
+
+    if status == EX_OK:
+        print "OK -", msg
+    elif status == EX_WARNING:
+        print "WARNING -", msg
+    elif status == EX_CRITICAL:
+        print "CRITICAL -", msg
+    else:
+        print "UNKNOWN -", msg
+
+    sys.exit(status)

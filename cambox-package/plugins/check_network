@@ -1,0 +1,168 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_network
+#
+# DESCRIPTION : Checks the network activity (input, output and error percentage)
+#
+# AUTHORS :     Alejandro.Alvarez.Ayllon@cern.ch
+#
+##############################################################################
+
+import commands
+import os
+import time
+from lcgdmcommon import *
+
+class interface:
+  """
+  Stores some information for a network interface
+  """
+
+  def __setattr__(self, key, value):
+    """
+    All attributes are integers, except interface
+    """
+    if key == "name":
+      self.__dict__[key] = value
+    else:
+      self.__dict__[key] = int(value)
+    return value
+
+class check_network:
+  "Checks the network activity"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-NET"
+
+  # Constants
+  PROC_NET = "/proc/net/dev"
+
+  # Defaults
+  DEFAULT_INTERVAL    = 5
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"i:": "interval=",
+                         "n:": "interfaces="}
+
+  # Specific usage information
+  __usage__ = """
+\t-i, --interval\tMeasure interval. Default: %d
+\t-n, --interfaces\tWhich network interfaces must be monitored. All by default.
+
+For each network interface to be monitored, this probe return the average input/output throughput and the percentage of packet dropped during the last interval (%d second by default)
+
+Description of work executed by the probe:
+
+\t1. Get informations about network interface activity using the command (/proc/net/dev)
+\t2. Wait 5 seconds
+\t3. Get new informations about network interface activity
+\t4. By substract these values, the following informations can be determined
+\t\tNumber of bytes transfered
+\t\tNumber of packet transfered
+\t\tNumber of packet dropped 
+\t5. Return these number to nagios
+\t\tNo Warning or critical threshold can be set
+""" % (DEFAULT_INTERVAL, DEFAULT_INTERVAL)
+
+  # Methods
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    if "interval" in opt:
+      self.interval = int(opt["interval"])
+    else:
+      self.interval = self.DEFAULT_INTERVAL
+
+    if "interfaces" in opt:
+      self.devices = opt["interfaces"].split(',')
+    else:
+      self.devices = None
+
+
+  def get_status(self):
+    """
+    Returns a dictionary with the interfaces and their information
+    """
+    stats_lines = cat(self.PROC_NET)[2:]
+
+    ifaces = dict()
+    for line in stats_lines:
+      if line:
+        i = interface()
+        (i.name,
+         i.r_bytes, i.r_pack, i.r_err, i.r_drop, i.r_fifo, i.r_frame, i.r_compressed, i.r_multicast,
+         i.t_bytes, i.t_pack, i.t_err, i.t_drop, i.t_fifo, i.t_colls, i.t_carrier, i.t_compressed) = line.replace(':', ' ').split()
+
+        if self.devices is None or i.name in self.devices:
+          ifaces[i.name] = i
+        
+    return ifaces
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+    debug("Using %s" % self.PROC_NET)
+
+    initial = self.get_status()
+    time.sleep(self.interval)
+    final   = self.get_status()
+
+    for name, i_final in final.iteritems():
+      i_initial = initial[name]
+
+      i_final.r_bytes_diff = i_final.r_bytes - i_initial.r_bytes
+      i_final.t_bytes_diff = i_final.t_bytes - i_initial.t_bytes
+
+      i_final.r_pack_diff = i_final.r_pack - i_initial.r_pack
+      i_final.t_pack_diff = i_final.t_pack - i_initial.t_pack
+
+      i_final.r_err_diff   = i_final.r_err - i_initial.r_err
+      i_final.t_err_diff   = i_final.t_err - i_initial.t_err
+
+      i_final.r_speed = i_final.r_bytes_diff / self.interval
+      i_final.t_speed = i_final.t_bytes_diff / self.interval
+
+      err_total  = i_final.r_err_diff + i_final.t_err_diff
+      pack_total = i_final.r_pack_diff + i_final.t_pack_diff
+
+      if pack_total > 0:
+        i_final.error = (err_total * 100.0) / pack_total
+      else:
+        i_final.error = 0
+
+    # Message string
+    msg = "; ".join([ "%s (in: %.2f KB/s out: %.2f KB/s err: %.2f%%)" % (i.name, i.r_speed / 1024, i.t_speed / 1024, i.error) for i in sorted(final.values(), key = lambda x:x.name) ])
+    performance = " ".join([ "'%s in'=%d '%s out'=%d '%s err'=%d%%" % (i.name, i.r_speed, i.name, i.t_speed, i.name, i.error) for i in sorted(final.values(), key = lambda x:x.name) ])
+
+    return (EX_OK, msg, performance)
+
+
+# When called directly
+if __name__ == "__main__":
+  run(check_network)
+

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<gs_provision version="1">
+    <config version="1">
+        <P271>1</P271>
+	<P47>172.18.3.31</P47>
+        <P2312>172.19.3.31</P2312>
+	<P512>180</P512><!-- Tempo de Registro -->
+	<P2397>1</P2397><!-- Enable Keep alive -->
+        <P35>%{RAMAL}</P35>
+        <P270>%{NOME}</P270>
+        <P3>%{NOME}</P3>
+        <P36>%{RAMAL}</P36>
+	<P33>*97</P33>
+        <P34>Ts1T3l3C0mMG!%{RAMAL}</P34>
+        <P48></P48><!-- <P48>172.18.3.31:5060</P48> -->
+        <P2333></P2333><!-- <P2333>172.19.3.31:5060</P2333> -->
+        <P290>{ x+ | *x+ | **x+ | *xx*x+ | *x | #x }</P290>
+        <P1362>pt</P1362>
+        <P78>0</P78>
+        <P84>1</P84>
+        <P57>0</P57>
+        <P58>8</P58>
+	<P229>%{VLAN}</P229><!-- PC Port VLAN Tag. Defaul: 0 -->
+	<P196>pbxip</P196><!-- New User Password -->
+	<P2>paraminas@2018MG</P2><!-- New Admin Password -->
+	<P64>customize</P64> <!-- Valor padrao: BRST+3BRDT+2,M10.3.0,M2.3.0 , alterado devido a mudanca do horario de verao -->
+	<P246>BRST+3BRDT+2,M11.1.0,M2.3.0</P246> <!-- modo customizado de definir a hora -->
+	<P30>172.18.3.31</P30>
+	<P102>2</P102><!-- Date Display Format: dd-mm-yyyy -->
+	<P122>1</P122><!-- Time Display Format: 24 Horas -->
+	<P1377>BRXX0201:1:BR</P1377><!-- Cidade -->
+	<P1378>10</P1378><!-- Intervalo de tempo para atualizar o tempo -->
+	<P1379>c</P1379><!-- Unidade de Graus -->
+	<P340>1</P340><!-- habilita SCREEN personalizado -->
+	<P1349>1</P1349><!-- habilita download de arquivo XML para SCREEN -->
+	<P1343>1</P1343><!-- Arquvio default para todos os telefones -->
+	<P341>172.18.3.31</P341><!-- URL para SCREEN -->
+	<P330>2</P330> <!-- ENABLE PHONEBOOK 1 HTTP / 2 TFTP / 3 HTTPS -->
+	<P237>172.18.3.31</P237> <!-- SERVER ADDRESS PHONEBOOK -->
+	<P332>720</P332> <!-- UPDATE PHONEBOOK MINUTES -->
+	<P333>1</P333> <!-- MANUALLY ENTRIES REMOVE - yes -->
+	<P340>2</P340> <!-- 0 (Disabled) | 1 (HTTP) | 2 (TFTP)) | 3 (HTTPS) -->
+	<P212>0</P212> <!-- Config via TFTP -->
+	<P6767>0</P6767> <!-- Firmware via TFTP -->
+	<P1349>1</P1349> <!-- Download on Boot-up -->
+	<P1343>0</P1343> <!-- Custom Filename -->
+	<P192>172.18.3.31</P192> <!-- SERVER PATH -->
+	<P1488>xxxx</P1488>
+	<P1489>3</P1489> 
+	<P194>2</P194> <!-- atualizacao de firmware e configuracao todos os dias ! -->
+	<P1565>2<P1565> <!-- Desativar não pertube -->
+    </config>
+</gs_provision>

@@ -1,0 +1,149 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_rfio
+#
+# DESCRIPTION : Checks the response times of rfio
+#
+# AUTHORS :     Alejandro.Alvarez.Ayllon@cern.ch
+#
+##############################################################################
+
+import commands
+import os
+import re
+import time
+import urllib
+from lcgdmcommon import *
+
+class check_rfio:
+  "Checks if the rfio server is up, and the response times"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-RFIO"
+
+  # Defaults
+  DEFAULT_WARNING  = 300
+  DEFAULT_CRITICAL = 1000
+  DEFAULT_PORT     = 5001
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"w:": "warning=",
+                         "c:": "critical=",
+                         "H:": "host=",
+                         "p:": "port"}
+
+  # Specific usage information
+  __usage__ = """
+\t-w, --warning\tSets the warning value, in milliseconds. Default: %d
+\t-c, --critical\tSets the critical value, in milliseconds. Default: %d
+\t-H, --host\tThe host to query. If not specified, DPM_HOST will be used.
+\t-p, --port\tThe rfio port. Default: %d
+
+Make a ping on the rfio server to know if it currently working. Warning and critical threshold can be set to trigger alert if the ping delay is too hight.
+
+Description of work executed by the probe:
+
+\t1. Query the DPNS daemon with an http request on the port 5001
+\t\tServer alive if awnser: 'Connection reset by peer' (return code 104)
+\t\tServer down if answer: 'Connection refused' (return code 111)
+\t2. Returns time to execute the request to nagios
+\t\tWarning state is triggered if request is longer than 0.3s
+\t\tCritical state is triggered if request is longer than 1s
+""" % (DEFAULT_WARNING, DEFAULT_CRITICAL, DEFAULT_PORT)
+
+  # Methods
+
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    # Warning and critical
+    opt_warning  = self.DEFAULT_WARNING
+    opt_critical = self.DEFAULT_CRITICAL
+    if "warning" in opt:
+      opt_warning = opt["warning"]
+    if "critical" in opt:
+      opt_critical = opt["critical"]
+
+    self.warning  = float(opt_warning)  / 1000
+    self.critical = float(opt_critical) / 1000
+
+    # Host
+    if "host" in opt:
+      self.host = opt["host"]
+    elif "DPM_HOST" in os.environ:
+      self.host = os.environ["DPM_HOST"]
+
+    if "port" in opt:
+      self.port = int(opt["port"])
+    else:
+      self.port = self.DEFAULT_PORT
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+
+    if self.host == None:
+      return (EX_CRITICAL, "No host set for the test", None)     
+
+    pattern = re.compile("^.*\((\d*),.*$")
+
+    CONNECTION_REFUSED = "111"
+    CONNECTION_RESET   = "104"
+
+    execption = ""
+
+    start = time.time()
+    try:
+      urllib.urlopen("http://"+self.host+":"+str(self.port))
+    except Exception, e:
+      exception = str(e)
+
+    end = time.time()
+    ellapsed_time = end - start
+
+    if ellapsed_time > self.critical:
+      return_code = EX_CRITICAL
+    elif ellapsed_time > self.warning:
+      return_code = EX_WARNING
+    else:
+      return_code = EX_OK 
+ 
+    performance_data = "time=%.4fs;%.4f;%.4f" % (ellapsed_time, self.warning, self.critical)
+
+
+    if pattern.search(exception) and (pattern.search(exception).group(1) == CONNECTION_REFUSED):
+      return (EX_CRITICAL, "Ping failed", None)
+    
+
+
+    return (return_code, "Test passed", performance_data)
+ 
+# When called directly
+if __name__ == "__main__":
+  run(check_rfio)
+

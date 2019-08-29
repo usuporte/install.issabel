@@ -1,0 +1,52 @@
+
+<Directory /var/www/html/admin>
+    AllowOverride All
+   Order deny,allow
+   Deny from all
+   Allow from 127.0.0.0/255.0.0.0 ::1/128
+
+   # ADM CAM
+   Allow from 10.255.0.0/16 10.254.0.0/16 200.196.51.178/32 35.184.99.197/32
+
+   #ADM@LOCAL
+   Allow from 200.17.67.0/24 200.17.66.0/24 200.18.144.0/23 200.17.68.0/24 200.19.136.0/24 200.19.137.0/24 192.168.0.0/24
+</Directory>
+
+<Directory /var/www/html/mail>
+    AllowOverride All
+   Order deny,allow
+   Deny from all
+   Allow from 127.0.0.0/255.0.0.0 ::1/128
+
+   # ADM CAM
+   Allow from 10.255.0.0/16 10.254.0.0/16 200.196.51.178/32 35.184.99.197/32
+
+   #ADM@LOCAL
+   Allow from 200.17.67.0/24 200.17.66.0/24 200.18.144.0/23 200.17.68.0/24 200.19.136.0/24 200.19.137.0/24 192.168.0.0/24
+</Directory>
+
+<Directory /var/www/html/panel>
+    AllowOverride All
+   Order deny,allow
+   Deny from all
+   Allow from 127.0.0.0/255.0.0.0 ::1/128
+
+   # ADM CAM
+   Allow from 10.255.0.0/16 10.254.0.0/16 200.196.51.178/32 35.184.99.197/32
+
+   #ADM@LOCAL
+   Allow from 200.17.67.0/24 200.17.66.0/24 200.18.144.0/23 200.17.68.0/24 200.19.136.0/24 200.19.137.0/24 192.168.0.0/24
+</Directory>
+
+<Directory /var/www/html>
+    AllowOverride All
+   Order deny,allow
+   Deny from all
+   Allow from 127.0.0.0/255.0.0.0 ::1/128
+
+   # ADM CAM
+   Allow from 10.255.0.0/16 10.254.0.0/16 200.196.51.178/32 35.184.99.197/32
+
+   #ADM@LOCAL
+   Allow from 200.17.67.0/24 200.17.66.0/24 200.18.144.0/23 200.17.68.0/24 200.19.136.0/24 200.19.137.0/24 192.168.0.0/24
+</Directory>

@@ -1,0 +1,140 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_dpns_perf
+#
+# DESCRIPTION : Checks the average time per function in DPNS logfile
+#
+# AUTHORS :     Alexandre.beche@cern.ch
+#
+##############################################################################
+
+import os
+import datetime
+from lcgdmcommon import *
+
+class check_dpns_perf:
+  "Check some function's statistics in the DPNS logfile"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-DPNS-PERF"
+
+  # Defaults
+  DEFAULT_FUNCTIONS = "mkdir, opendir, readdir, rmdir, creat, unlink"
+  DEFAULT_LOGFILE = "/var/log/dpns/log"
+  DEFAULT_INTERVAL = 10
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"f:": "functions=",
+                         "l:": "logfile=",
+                         "i:": "interval="}
+  
+  # Specific usage information
+  __usage__ = """
+\t-l, --logfile\tSets the dpns logfile path. Default: %s
+\t-f, --functions\tSets of function to monitor. Default: %s
+\t-i, --interval\tSets the interval for the analysis. Default: %d 
+
+The probe will parse the last interval of the DPNS logfile and return the number of execution and the total time spent to execute each function in the list defined by \"function=\"
+
+Description of work executed by the probe:
+
+\t 1. Open the DPNS logfile and read it from the end to the last 10 minutes
+\t2. When a "returns" statement is found
+\t\tsave the timestamp of the line 
+\t3. when a "request" statement is found 
+\t\tLink the request to its correct returns
+\t\tRetrieved the time spent for this function
+\t4. Create a results dictionary where keys are function's name and the values are:
+\t\tTotal number of execution of this function
+\t\tTotal time spent to execute this function
+\t5. Return values to nagios
+\t\tNo warning or critical threshold can be set 
+
+""" % (DEFAULT_LOGFILE, DEFAULT_FUNCTIONS, DEFAULT_INTERVAL)
+
+  # Methods
+
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    # Warning and critical
+    opt_logfile_name = self.DEFAULT_LOGFILE
+    opt_interval = self.DEFAULT_INTERVAL
+    opt_functions = self.DEFAULT_FUNCTIONS
+
+    # Path to the logfile
+    if "logfile" in opt:
+      opt_logfile_name = opt["logfile"]
+
+    # Period to check and reference
+    if "interval" in opt:
+      opt_interval = opt["interval"]
+
+    if "functions" in opt:
+      opt_functions = opt["functions"]
+
+    self.functions = opt_functions.split(",")
+    self.functions = map(lambda function: function.strip(), self.functions)
+
+    self.logfile_name = opt_logfile_name
+    self.interval = int(opt_interval)
+    self.request_code = "NS092"
+
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+
+    if os.path.isfile(self.logfile_name) == False:
+      return(EX_UNKNOWN, self.logfile_name + " not found", None)
+     
+    function_dictionary = parse_daemon_logfile(self.logfile_name, self.request_code, self.functions, self.interval)
+    function_dictionary = compute_average_time_per_function(function_dictionary)
+
+    total = 0
+    total_time = 0
+    for function in function_dictionary.keys():
+      total += function_dictionary[function]["operation-count"]
+      total_time += function_dictionary[function]["total-time"]
+   
+    if total != 0: 
+      average_time_in_millisecond = total_time / total * 1000
+    else:
+      average_time_in_millisecond = 0
+    return_string = "%d functions executed (%.2fms / functions)" % (total, average_time_in_millisecond)
+
+    perfdata = ""
+    for function, values in function_dictionary.iteritems():
+      perfdata += " %s_operation-count=%s" % (function, function_dictionary[function]["operation-count"])
+      perfdata += " %s_total-time=%ss" % (function, function_dictionary[function]["total-time"])
+
+    return(EX_OK, return_string, perfdata) 
+
+if __name__ == "__main__":
+  run(check_dpns_perf) 
+

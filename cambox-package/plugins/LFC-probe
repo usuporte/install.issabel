@@ -1,0 +1,54 @@
+#!/usr/bin/env python
+##############################################################################
+#
+# NAME:        LFC-probe
+#
+# FACILITY:    SAM (Service Availability Monitoring)
+#
+# COPYRIGHT:
+#         Copyright (c) 2009, Members of the EGEE Collaboration.
+#         http://www.eu-egee.org/partners/
+#         Licensed under the Apache License, Version 2.0.
+#         http://www.apache.org/licenses/LICENSE-2.0
+#         This software is provided "as is", without warranties
+#         or conditions of any kind, either express or implied.
+#
+# DESCRIPTION:
+#
+#         LFC probe.
+#
+# AUTHORS:     Konstantin Skaburskas, CERN
+#
+# CREATED:     24-Aug-2010
+#
+# NOTES:
+#
+# MODIFIED:
+##############################################################################
+
+"""
+LFC probe.
+
+LFC probe.
+
+Konstantin Skaburskas <konstantin.skaburskas@cern.ch>, CERN
+SAM (Service Availability Monitoring)
+"""
+
+import sys
+
+try:
+    from gridmon import probe
+    from lfcmetrics.lfcmetrics import LFCMetrics as LFC
+except ImportError,e:
+    summary = "UNKNOWN: Error loading modules : %s" % (e)
+    sys.stdout.write(summary+'\n')
+    sys.stdout.write(summary+'\nsys.path: %s\n'% str(sys.path))
+    sys.exit(3)
+
+class LFCMetrics(LFC):
+    def __init__(self, tuples):
+        LFC.__init__(self, tuples, 'LFC')
+
+runner = probe.Runner(LFCMetrics, probe.ProbeFormatRenderer())
+sys.exit(runner.run(sys.argv))

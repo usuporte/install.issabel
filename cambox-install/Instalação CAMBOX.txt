@@ -1,0 +1,49 @@
+1. Bootar o pendrive com ISSABEL (gravei um pendrive bootável)
+    2. Selecionar Versão 11
+    3. Na tela que tá demorando muito… tecle [ESC]
+    4. dracut:/# (digite “exit”)
+    5. Na interface:
+        1. DATA e HORA
+        2. TECLADO
+        3. SOFTWARE DISPONÍVEL (ISSABEL)
+        4. DESTINOINSTALACAO: desmarcar pendrive, marcar configurar automaticamente, recuperar espaço.
+           RECUPERAR ESPAÇO: ApagarTudo e Recuperar Espaço
+        5. REDE & NOME (ativar eth0 => ON)
+    6. SENHA RAIZ e do MariaDB (senha do root => mysql.admin )
+    7. yum update (Toda vez que for executado esse comando sera obrigatorio realizaro processo 8 para Disabled)
+    8. CONFIGURAÇÃO SELINUX e Firewalld:
+           vim /etc/selinux/config
+	   systemctl disable firewalld (Comando executado para quando reiniciar a maquina nao precisar usar o iptables -F
+		
+#reiniciar o servidor após a configuração.
+    9. CRIAÇÃO DE USUÁRIOS (cam (com root), etc)
+    10. Habilitar usuario cam no /etc/sudoers
+    11. Configuração rede
+    12. systemctl enable dhcpd
+		/etc/init.d/netword restart
+
+    • yum upgrade
+    • yum install openvpn htop mlocate wireshark nrpe
+
+    • yum install sngrep (procurar um repositório)
+    • yum install stunserver (Seguir manual cam)
+    
+    • Configuração nrpe (Seguir manual cam)
+    
+    12. Instalação Tema CAM
+    13. Configuração Firewall /etc/httpd/conf.d/issabel-htaccess.conf
+    	• systemctl restart httpd
+    14. Configuração placa de rede para VPN
+    15. Configuração /Lista = Copiar a pasta lista para /var/www/html/
+    16. Configuração tftp
+    17. Configuração hosts
+    18. Instalar driver khomp
+    19. Configuração audios =  cp -r audios-pt-br /var/lib/asterisk/sounds/pt-br
+    20. Configuração CDR (Manual CAM)
+    21. Alterar o nome da maquina = /etc/hostname/
+    22. Alterar o arquivo /etc/asterisk/khomp.conf = language = pt-br
+    23. Configurar o driver da khomp.
+    24. Configuração kswitch-vlan eth0 visibility restricted
+    25. kswitch-vlan eth0 visibility list
+    26. Configuração OpenVPN - Pendente
+    27. Configurar KHOMP - Telefonia > Links E1 / Dispositivos / 

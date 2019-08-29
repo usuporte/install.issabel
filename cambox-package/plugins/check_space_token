@@ -1,0 +1,179 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_space_token
+#
+# DESCRIPTION : Checks the available space per space token
+#
+# AUTHORS :     Alexandre.Beche@cern.ch
+#
+##############################################################################
+
+import commands
+import datetime
+import os
+import dpm
+import time
+from lcgdmcommon import *
+
+class check_space_token:
+  """Checks the available space per space token"""
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-SPACE-TOKEN"
+
+  DEFAULT_WARNING = 30
+  DEFAULT_CRITICAL = 15
+  DEFAULT_DETAILS = "critical"
+  DEFAULT_UNITS = None
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"w:": "warning=",
+                         "c:": "critical=",
+			 "d:": "details=",
+			 "u:": "units=",
+			 "t:": "tokens="}
+
+  # Specific usage information
+  __usage__ = """
+\t-w, --warning\tDefault warning threshold in percent of unused space in a space token. (Default: %d ).
+\t-c, --critical\tDefault warning threshold in percent of unused space in a space token. (Default: %d ).
+\t-d, --details\tDefault level of details in the performance data output. Possible values: critical, warning, all. (Default: %s).
+\t-u, --units\tAll  sizes are output in these units: (k)ilobytes, (m)egabytes,  (g)igabytes,  (t)erabytes, (p)etabytes. Capitalise  to use multiples of 1000 (S.I.) instead of 1024.
+\t-t, --tokens\tRestricts the tokens to a list sparated by commas. (e.g. token1,token2)
+
+Description of work executed by the probe:
+
+\t3. Retreive for each monitored space token
+\t\tThe free space
+\t\tThe used space
+\t4. Return values to nagios
+\t\tWarning alert is trgiggered if free space is under 30 percent of the total space
+\t\tCritical alert is trgiggered if free space is under 10 percent of the total space
+""" % (DEFAULT_WARNING, DEFAULT_CRITICAL, DEFAULT_DETAILS)
+
+  # Methods
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+
+    opt_warning = self.DEFAULT_WARNING
+    opt_critical = self.DEFAULT_CRITICAL
+    opt_details = self.DEFAULT_DETAILS
+    opt_units = self.DEFAULT_UNITS
+
+
+    if "warning" in opt:
+      opt_warning = opt["warning"]
+    if "critical" in opt:
+      opt_critical = opt["critical"]
+    if "details" in opt:
+      opt_details = opt["details"]
+    if "units" in opt:
+      opt_units = opt["units"]
+
+    self.warning = int(opt_warning)
+    self.critical = int(opt_critical)
+    self.details = opt_details
+    self.units = opt_units
+
+    self.tokens = None
+    if "tokens" in opt:
+      self.tokens = opt["tokens"].split(",")
+
+  def filter_tokens(self, token_array):
+    filtering_token_array = []
+    for stoken in token_array:
+      (_, token) =  dpm.dpm_getspacemd([stoken])
+      if (self.tokens is None) or (token[0].u_token in self.tokens):
+        filtering_token_array.append(token)
+    return filtering_token_array
+
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+
+    return_code = EX_OK
+    return_detail = ""
+    critical_token = ""
+    warning_token = "" 
+    warning, critical = 0,0
+
+    space_token_summary = {}
+
+    (_, token_array) = dpm.dpm_getspacetoken(None)
+    token_array = self.filter_tokens(token_array)
+    for token in token_array:
+      u_token, total_space, available_space = token[0].u_token, token[0].t_space, token[0].u_space
+      warning_threshold, critical_threshold = (self.warning * total_space / 100), (self.critical * total_space / 100)
+      
+      # Critical should be triggered for any level of details (all, critical, warning) 
+      if available_space < critical_threshold:
+        if return_code < EX_CRITICAL:
+          return_code = EX_CRITICAL
+        critical += 1
+        critical_token += "'" + u_token + "'"
+        if self.details in ["all", "critical", "warning"]:
+          space_token_summary[u_token] = [available_space, warning_threshold, critical_threshold, total_space]
+        continue
+
+      # Warning should be triggered for (all or warning) level of details
+      if available_space < warning_threshold:
+        if return_code < EX_WARNING:
+          return_code = EX_WARNING
+        if self.details in ["all", "warning"]:
+          warning += 1
+          space_token_summary[u_token] = [available_space, warning_threshold, critical_threshold, total_space]
+        continue 
+
+      if self.details == "all":
+        space_token_summary[u_token] = [available_space, warning_threshold, critical_threshold, total_space] 
+
+    performance_data = ""
+    for key, value in space_token_summary.iteritems():
+      performance_data += key
+      performance_data += "="
+      performance_data += str(standard_units(value[0], self.units))
+      if self.units is not None:
+        performance_data += str(self.units) 
+      performance_data += "B;"
+      performance_data += str(standard_units(value[1], self.units)) + ";"
+      performance_data += str(standard_units(value[2], self.units)) + ";0;" 
+      performance_data += str(standard_units(value[3], self.units)) + " "
+
+    
+    return_data = str(critical) + " criticals:" + critical_token + "and " + str(warning) + " warnings" 
+    return_data += return_detail
+    
+    return (return_code, return_data, performance_data)
+
+
+# When called directly
+if __name__ == "__main__":
+  run(check_space_token)
+

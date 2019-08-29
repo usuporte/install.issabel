@@ -1,0 +1,3 @@
+cd /var/www/html/themes/
+wget http://www.camtecnologia.com.br/downloads/camboxOT_201402.tar.gz
+tar -xzvf camboxOT_201402.tar.gz

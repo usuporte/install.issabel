@@ -1,0 +1,31 @@
+#Khomp configuration file 
+#Please note that indentation denotes scope but TABs are not permitted
+
+#All fields are case sensitive
+---
+
+Patterns:
+  - Name: aCobrar
+    State: Connected
+    Pattern:
+      - Tone: 600
+        Min: 350
+        Max: 600
+      - Tone: 1000
+        Min: 350
+        Max: 550
+
+  - Name: aCobrar300Hz
+    State: Connected
+    Pattern:
+      - Tone: 1000
+        Min: 40
+        Max: 72
+      - Tone: 300
+        Min: 380
+        Max: 430
+      - Tone: 1000
+        Min: 92
+        Max: 420
+
+

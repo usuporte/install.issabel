@@ -1,0 +1,227 @@
+#Khomp configuration file
+#Please note that indentation denotes scope but TABs are not permitted
+
+#All fields are case sensitive
+---
+
+Version: 1
+Patterns:
+  - Name: Fax 1100Hz
+    State: Connected
+    Classification: Fax
+    Pattern: 
+      - Tone: 1100
+        Min: 100
+        Max: 3000
+      - Tone: Silence
+        Min: 50
+        Max: 2000
+
+  - Name: Fax 1800Hz
+    State: Connected
+    Classification: Fax
+    Pattern: 
+      - Tone: 1800
+        Min: 100 
+        Max: 3000 
+      - Tone: Silence
+        Min: 50
+        Max: 2000
+
+  - Name: Fax 2100Hz
+    State: Connected
+    Classification: Fax
+    Pattern: 
+      - Tone: 2100
+        Min: 100
+        Max: 3000
+      - Tone: Silence
+        Min: 50
+        Max: 2000
+
+  - Name: All lines are busy
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 712
+        Max: 742
+      - Tone: Silence
+        Min: 96
+        Max: 120
+      - Tone: Voice
+        Min: 224
+        Max: 256
+      - Tone: 300
+        Min: 50
+        Max: 64
+
+  - Name: The number you dialed does not exist
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Voice
+        Min: 568
+        Max: 584
+      - Tone: Silence
+        Min: 50
+        Max: 64
+      - Tone: Voice
+        Min: 176
+        Max: 192
+      - Tone: Silence
+        Min: 50
+        Max: 64
+
+  - Name: Busy tone
+    State: Any
+    Classification: Interception Announcement
+    Pattern:
+      - Tone: Call Progress
+        Min: 232
+        Max: 280
+      - Tone: Silence
+        Min: 232
+        Max: 280
+      - Tone: Call Progress
+        Min: 232
+        Max: 280
+      - Tone: Silence
+        Min: 232
+        Max: 280
+      - Tone: Call Progress
+        Min: 232
+        Max: 280
+
+  - Name: Voice mail 300Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: 300
+        Min: 160
+        Max: 260
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Voice mail 720Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: 720
+        Min: 160
+        Max: 1000
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Voice mail 1000Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: 1000
+        Min: 248
+        Max: 1000 
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: Voice mail 1400Hz
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Silence
+        Min: 400
+        Max: 850
+      - Tone: 1400
+        Min: 120
+        Max: 240
+      - Tone: Silence
+        Min: 50
+        Max: 1000
+
+  - Name: The call is charged to complete the following tones
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 560
+        Max: 728
+      - Tone: Silence
+        Min: 64
+        Max: 80
+      - Tone: Voice
+        Min: 232
+        Max: 264
+      - Tone: Silence
+        Min: 64
+        Max: 88
+      - Tone: Voice
+        Min: 576
+        Max: 720
+      - Tone: Silence
+        Min: 56
+        Max: 160
+
+  - Name: Voicemail, the call is charged to complete the following tones
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 1112
+        Max: 1120
+      - Tone: Silence
+        Min: 344
+        Max: 352
+      - Tone: Voice
+        Min: 1800
+        Max: 1824
+      - Tone: Silence
+        Min: 64
+        Max: 88
+      - Tone: Voice
+        Min: 864
+        Max: 880
+
+  - Name: Your call will be transferred to the voicemail and count as answered call from Tone
+    State: Any
+    Classification: Voice Mail
+    Pattern:
+      - Tone: Voice
+        Min: 6080
+        Max: 6128
+      - Tone: Silence
+        Min: 88
+        Max: 200
+      - Tone: Voice
+        Min: 1320
+        Max: 1448
+      - Tone: 300
+        Min: 120
+        Max: 144
+      - Tone: Voice
+        Min: 96
+        Max: 128
+
+  - Name: Ring and voice
+    State: Ringing
+    Classification: Ringback Signal
+    Pattern:
+      - Tone: Call Progress
+        Min: 400
+        Max: 1200
+      - Tone: Voice
+        Min: 700
+        Max: 4200
+
+  - Name: Ring
+    State: Ringing
+    Classification: Ringback Signal
+    Pattern:
+      - Tone: Call Progress
+        Min: 650
+        Max: 1100
+      - Tone: Silence
+        Min: 2500
+        Max: 4200
+

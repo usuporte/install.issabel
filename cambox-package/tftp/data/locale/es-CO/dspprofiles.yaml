@@ -1,0 +1,167 @@
+#Khomp configuration file
+#Please note that indentation denotes scope but TABs are not permitted
+#All fields are case sensitive
+
+---
+DspProfiles:
+    - Default: 
+        DtmfMaxPower:               0
+        DtmfMinPower:               -36     
+        DialToneMaxPower:           0
+        DialToneMinPower:           -39
+        t600HzMaxPower:             0
+        t600HzMinPower:             -36
+        t1000HzMaxPower:            0
+        t1000HzMinPower:            -36
+        t1100HzMaxPower:            0   
+        t1100HzMinPower:            -36
+        t2100HzMaxPower:            0
+        t2100HzMinPower:            -36
+        DualToneMaxPower:           0
+        DualToneMinPower:           -36
+        SilenceMaxPower:            -33
+        DtmfTolerance:              2.5
+        DtmfMaxTwist:               -12
+        DtmfMaxHarmonicDist:        0.7
+        DialToneMaxHarmonicDist:    0.8
+        DialToneMinFreq:            400
+        DialToneMaxFreq:            450
+        t600HzTolerance:            5
+        t1000HzTolerance:           7.5
+        t1100HzTolerance:           1.5
+        t2100HzTolerance:           1.5
+        DualToneTolerance:          1.5
+        AgcMaxGain:                 4
+        DtmfSuppressionTime:        10
+        DtmfValidationTime:         48
+        DialToneValidationTime:     40
+        t600HzValidationTime:       48
+        t1000HzValidationTime:      48
+        t1100HzValidationTime:      72
+        t2100HzValidationTime:      72
+        DualToneValidationTime:     72
+        SilenceValidationTime:      48
+        VoiceValidationTime:        80
+        MfcValidationTime:          24
+    - GSMDefault: 
+        DtmfMaxPower:               60
+        DtmfMinPower:               -25     
+        DialToneMaxPower:           0
+        DialToneMinPower:           -39
+        t600HzMaxPower:             0
+        t600HzMinPower:             -36
+        t1000HzMaxPower:            0
+        t1000HzMinPower:            -36
+        t1100HzMaxPower:            0   
+        t1100HzMinPower:            -36
+        t2100HzMaxPower:            0
+        t2100HzMinPower:            -36
+        DualToneMaxPower:           -42
+        DualToneMinPower:           -36
+        SilenceMaxPower:            -42
+        DtmfTolerance:              2.5
+        DtmfMaxTwist:               -12
+        DtmfMaxHarmonicDist:        0.5
+        CallProgrMaxHarmonicDist:   0.5
+        DialToneMinFreq:            400
+        DialToneMaxFreq:            450
+        t600HzTolerance:            7.5
+        t1000HzTolerance:           7.5
+        t1100HzTolerance:           1.5
+        t2100HzTolerance:           1.5
+        DualToneTolerance:          1.5
+        AgcMaxGain:                 4
+        DtmfSuppressionTime:        25
+        DtmfValidationTime:         48
+        DialToneValidationTime:     40
+        t600HzValidationTime:       32
+        t1000HzValidationTime:      32
+        t1100HzValidationTime:      32
+        t2100HzValidationTime:      32
+        DualToneValidationTime:     32
+        SilenceValidationTime:      48
+        VoiceValidationTime:        80
+        MfcValidationTime:          24
+    - FXODefault: 
+        DtmfMaxPower:               0
+        DtmfMinPower:               -36     
+        DialToneMaxPower:           0
+        DialToneMinPower:           -39
+        t600HzMaxPower:             0
+        t600HzMinPower:             -36
+        t1000HzMaxPower:            0
+        t1000HzMinPower:            -36
+        t1100HzMaxPower:            0   
+        t1100HzMinPower:            -36
+        t2100HzMaxPower:            0
+        t2100HzMinPower:            -36
+        DualToneMaxPower:           0
+        DualToneMinPower:           -36
+        SilenceMaxPower:            -42
+        DtmfTolerance:              2.5
+        DtmfMaxTwist:               -12
+        DtmfMaxHarmonicDist:        0.7
+        DialToneMaxHarmonicDist:    0.8
+        DialToneMinFreq:            400
+        DialToneMaxFreq:            450
+        t600HzTolerance:            7.5
+        t1000HzTolerance:           7.5
+        t1100HzTolerance:           1.5
+        t2100HzTolerance:           1.5
+        DualToneTolerance:          1.5
+        AgcMaxGain:                 4
+        DtmfSuppressionTime:        10
+        DtmfValidationTime:         48
+        DialToneValidationTime:     40
+        t600HzValidationTime:       32
+        t1000HzValidationTime:      32
+        t1100HzValidationTime:      32
+        t2100HzValidationTime:      32
+        DualToneValidationTime:     32
+        SilenceValidationTime:      48
+        VoiceValidationTime:        80
+        MfcValidationTime:          24
+
+CustomDetectionTonesProfiles:
+    - Profile1:
+        - Frequency:              300
+          ValidationTime:         40
+          Tolerance:              5
+          MaxPower:               0
+          MinPower:               -40
+        - Frequency:              535
+          ValidationTime:         40
+          Tolerance:              5
+          MaxPower:               0
+          MinPower:               -38
+        - Frequency:              720
+          ValidationTime:         40
+          Tolerance:              5
+          MaxPower:               0
+          MinPower:               -38
+        - Frequency:              875
+          ValidationTime:         40
+          Tolerance:              3
+          MaxPower:               0
+          MinPower:               -38
+        - Frequency:              940
+          ValidationTime:         40
+          Tolerance:              5
+          MaxPower:               0
+          MinPower:               -38
+        - Frequency:              1320
+          ValidationTime:         40
+          Tolerance:              3
+          MaxPower:               0
+          MinPower:               -38
+        - Frequency:              1400
+          ValidationTime:         40
+          Tolerance:              2.8
+          MaxPower:               0
+          MinPower:               -38
+        - Frequency:              1800
+          ValidationTime:         40
+          Tolerance:              5
+          MaxPower:               0
+          MinPower:               -38
+

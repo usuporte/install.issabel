@@ -1,0 +1,60 @@
+SNGREP PARA CENTOS 7:
+
+First of all, add the irontec repository to centos Repos. 
+Create file named sngrep.repo  in /etc/yum.repos.d folder and add the following repository.
+
+touch /etc/yum.repos.d/irontec.repo 
+vim /etc/yum.repos.d/irontec.repo 
+
+[irontec]
+name=Irontec RPMs repository
+baseurl=http://packages.irontec.com/centos/$releasever/$basearch/
+
+
+
+rpm --import http://packages.irontec.com/public.key (–  igual menos menos)
+
+
+yum install sngrep
+
+
+################################################
+
+Debian
+Add Irontec repositories entry in your /etc/apt/sources.list 
+Use your distrubution source line (only one of these)
+
+deb http://packages.irontec.com/debian squeeze main
+deb http://packages.irontec.com/debian wheezy main
+deb http://packages.irontec.com/debian jessie main
+deb http://packages.irontec.com/debian stretch main
+Ubuntu
+Add Irontec repositories entry in your /etc/apt/sources.list 
+Use your distrubution source line (only one of these)
+
+deb http://packages.irontec.com/ubuntu trusty main
+deb http://packages.irontec.com/ubuntu precise main
+deb http://packages.irontec.com/ubuntu vivid main
+deb http://packages.irontec.com/ubuntu xenial main
+deb http://packages.irontec.com/ubuntu zesty main
+deb http://packages.irontec.com/ubuntu artful main
+Install Repository key
+
+wget http://packages.irontec.com/public.key -q -O - | apt-key add -
+Install the package
+
+apt-get update
+apt-get install sngrep
+
+Ubuntu old
+
+deb http://ftp.debian.org/debian/ jessie main non-free
+deb-src http://ftp.debian.org/debian/ jessie main non-free
+
+deb http://security-cdn.debian.org/ jessie/updates main non-free
+deb-src http://security-cdn.debian.org/ jessie/updates main non-free
+
+deb http://packages.irontec.com/debian jessie main
+
+#deb http://ag-projects.com/debian jessie main
+#deb-src http://ag-projects.com/debian jessie main

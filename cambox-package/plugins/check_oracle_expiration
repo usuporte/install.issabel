@@ -1,0 +1,110 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_oracle_expiration
+#
+# DESCRIPTION : Checks if the password expiration date is in range
+#
+# AUTHORS :     Alejandro.Alvarez.Ayllon@cern.ch
+#
+##############################################################################
+
+import commands
+import cx_Oracle
+from datetime import datetime, timedelta
+from lcgdmcommon import *
+
+class check_oracle_expiration:
+  "Checks if the password expiration date is in range"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-ORA"
+
+  # Defaults
+  DEFAULT_WARNING  = 10
+  DEFAULT_CRITICAL = 2
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"w:": "warning=",
+                         "c:": "critical=",
+                         "C:": "connection=",
+                         "u:": "user=",
+                         "p:": "password="}
+
+  # Specific usage information
+  __usage__ = """
+\t-w, --warning\tSets the warning value, in days. Default: %d
+\t-c, --critical\tSets the critical value, in days. Default: %d
+\t-C, --connection\tOracle connection string
+\t-u, --user\tOracle user name
+\t-p, --password\tOracle user password
+""" % (DEFAULT_WARNING, DEFAULT_CRITICAL)
+
+  # Methods
+
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    # Get warning and critic options
+    opt_warning  = self.DEFAULT_WARNING
+    opt_critical = self.DEFAULT_CRITICAL
+    if "warning" in opt:
+      opt_warning = opt["warning"]
+    if "critical" in opt:
+      opt_critical = opt["critical"]
+
+    self.warning  = int(opt_warning)
+    self.critical = int(opt_critical)
+
+    # Connection parameters
+    self.dsn      = opt["connection"]
+    self.user     = opt["user"]
+    self.password = opt["password"]  
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+    conn = cx_Oracle.connect(self.user, self.password, self.dsn)
+    cursor = conn.cursor()
+    cursor.execute("SELECT expiry_date FROM user_users")
+
+    row = cursor.fetchone()
+    expiry = row[0]
+    remaining = expiry - datetime.now()
+    if remaining < timedelta(days = self.critical):
+      exit = EX_CRITICAL
+    elif remaining < timedelta(days = self.warning):
+      exit = EX_WARNING
+    else:
+      exit = EX_OK
+
+    return (exit, "The password expires in %d days" % remaining.days, "expires=%d;%d:;%d:" % (remaining.days, self.warning, self.critical))
+
+# When called directly
+if __name__ == "__main__":
+  run(check_oracle_expiration)
+

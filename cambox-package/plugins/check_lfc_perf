@@ -1,0 +1,148 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_lfc_perf
+#
+# DESCRIPTION : Checks the average time per function in LFC logfile
+#
+# AUTHORS :     Alexandre.beche@cern.ch
+#
+##############################################################################
+
+import os
+from lcgdmcommon import *
+
+class check_lfc_perf:
+  "Check the average execution time for each function in the DPNS logfile"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-LFC-PERF"
+
+  # Defaults
+  DEFAULT_WARNING  = 5 
+  DEFAULT_CRITICAL = 10
+  DEFAULT_LOGFILE = "/var/log/lfc/log"
+  DEFAULT_REFERENCE = 10
+  DEFAULT_PERIOD = 10
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"w:": "warning=",
+                         "c:": "critical=",
+                         "l:": "logfile=",
+                         "r:": "reference=",
+                         "p:": "period=",}
+  
+  # Specific usage information
+  __usage__ = """
+\t-w, --warning\tSets the warning value. Default: %d
+\t-c, --critical\tSets the critical value. Default: %d
+\t-l, --logfile\tSets the dpns logfile path. Default: %s 
+\t-r, --reference\tSets the reference time (in hour) for the analysis. Default: %d
+\t-p, --period\tSets the period time (in minute) for the analysis. Default: %d 
+""" % (DEFAULT_WARNING, DEFAULT_CRITICAL, DEFAULT_LOGFILE, DEFAULT_REFERENCE, DEFAULT_PERIOD)
+
+  # Methods
+
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    # Warning and critical
+    opt_warning = self.DEFAULT_WARNING
+    opt_critical = self.DEFAULT_CRITICAL
+    opt_logfile_name = self.DEFAULT_LOGFILE
+    opt_reference = self.DEFAULT_REFERENCE
+    opt_period = self.DEFAULT_PERIOD
+
+    if "warning" in opt:
+      opt_warning = opt["warning"]
+    if "critical" in opt:
+      opt_critical = opt["critical"]
+
+    # Path to the logfile
+    if "logfile" in opt:
+      opt_logfile_name = opt["logfile"]
+
+    # Period to check and reference
+    if "period" in opt:
+      opt_period = opt["period"]
+    if "reference" in opt:
+      opt_reference = opt["reference"]
+
+    self.warning = float(opt_warning)
+    self.critical = float(opt_critical)
+    self.logfile_name = opt_logfile_name
+    self.reference = 60 * int(opt_reference)
+    self.period = int(opt_period)
+    self.request_code = "NS092"
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+
+    if os.path.isfile(self.logfile_name) == False:
+      return(EX_UNKNOWN, self.logfile_name + " not found", None)
+    if self.reference < self.period:
+      return(EX_UNKNOWN, "Period to check is highter than the reference period", None)
+      
+    logfile = open(self.logfile_name, "r")
+
+    return_string = ""
+    
+    is_value = go_to_end(logfile, self.reference)
+    if is_value == 0:
+      logfile.close()
+      logfile = open(self.logfile_name, "r")
+      reference_list = find_average_time(logfile, self.request_code)
+      return_string = "No line found the %d last hour(s)" % (self.reference/60)
+    else:  
+      reference_list = find_average_time(logfile, self.request_code)
+
+    logfile.close()
+
+    #analyse last x minute in logfile
+    logfile = open(self.logfile_name, "r")
+    is_value = go_to_end(logfile, self.period)
+    
+    list_to_compare = []
+    if is_value: 
+        list_to_compare = find_average_time(logfile, self.request_code)
+    logfile.close()
+
+    return_values = compare_list(reference_list, list_to_compare, self.warning, self.critical)
+
+    for line in return_values[2]:
+      return_string += line
+    
+    perfdata = ""
+    for k, v in return_values[1].iteritems():
+      perfdata += k+"="+str(v[0])+":"+str(v[1])+" "
+
+    return(return_values[0], return_string, perfdata) 
+
+if __name__ == "__main__":
+  run(check_lfc_perf) 
+

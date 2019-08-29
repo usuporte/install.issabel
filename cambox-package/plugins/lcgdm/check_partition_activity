@@ -1,0 +1,185 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_partition_activity
+#
+# DESCRIPTION : Checks all the partitions activity
+#
+# AUTHORS :     Alejandro.Alvarez.Ayllon@cern.ch
+#
+##############################################################################
+
+import commands
+import os
+import time
+from lcgdmcommon import *
+
+class partition:
+  """Partition information"""
+
+  def __setattr__(self, key, val):
+    """
+    All attributes are integers except dev
+    """
+    if key == "dev":
+      self.__dict__[key] = val
+    else:
+      self.__dict__[key] = int(val)
+    return val
+
+  def __str__(self):
+    """
+    String representation
+    """
+    return """Device: (%d, %d) %s
+Reads:  %d\tReads merged:  %d\tSectors read:    %d\tMilliseconds: %d
+Writes: %d\tWrites merged: %d\tSectors written: %d\tMilliseconds: %d
+""" % (self.M, self.m,        self.dev,
+       self.r, self.r_merged, self.r_sectors, self.r_ms,
+       self.w, self.w_merged, self.w_sectors, self.w_ms) 
+
+
+class check_partition_activity:
+  "Checks all the partitions activity"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-PART"
+
+  # Constants
+  PROC_PARTITIONS = "/proc/partitions"
+  PROC_DISKSTATS  = "/proc/diskstats"
+
+  # Defaults
+  DEFAULT_WARNING     = "100"
+  DEFAULT_CRITICAL    = "102"
+  DEFAULT_INTERVAL    = 5
+  DEFAULT_SECTOR_SIZE = 512
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"w:": "warning=",
+                         "c:": "critical=",
+                         "i:": "interval=",
+                         "p:": "partition=",
+                         "s:": "sector="}
+
+  # Specific usage information
+  __usage__ = """
+\t-w, --warning\tSets the warning value. Default: %s
+\t-c, --critical\tSets the critical value. Default: %s
+\t-i, --interval\tMeasure interval. Default: %d
+\t-p, --partition\tRestrict the probe to one or more specific partitions, separated by commas. Use the device name, not the path (e.g. sda1 instead of /dev/sda1)
+\t-s, --sector\tThe sector size, in bytes. By default, %d
+
+Return the read and write throughput of the specified partition during the last interval.
+""" % (DEFAULT_WARNING, DEFAULT_CRITICAL, DEFAULT_INTERVAL, DEFAULT_SECTOR_SIZE)
+
+  # Methods
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    # Parameters
+    opt_warning   = self.DEFAULT_WARNING
+    opt_critical  = self.DEFAULT_CRITICAL
+    if "warning" in opt:
+      opt_warning = opt["warning"]
+    if "critical" in opt:
+      opt_critical = opt["critical"]
+    
+
+    (self.read_warning,  self.write_warning)  = get_tuple(opt_warning, 2, True)
+    (self.read_critical, self.write_critical) = get_tuple(opt_critical, 2, True)
+
+    if "interval" in opt:
+      self.interval = int(opt["interval"])
+    else:
+      self.interval = self.DEFAULT_INTERVAL
+
+    if "sector" in opt:
+      self.sector_size = int(opt["sector"])
+    else:
+      self.sector_size = self.DEFAULT_SECTOR_SIZE
+
+    # Get the partition list from PROC_PARTITIONS, if not specified
+    self.partitions = []
+    if "partition" in opt:
+      for dev in opt["partition"].split(','):
+        self.partitions.append(dev)
+    else:
+      partitions_lines = cat(self.PROC_PARTITIONS)[2:]
+      for line in partitions_lines:
+        if line:
+          dev = line.strip().split()[3]
+          if dev[-1].isdigit():
+            self.partitions.append(dev)
+
+  def get_status(self):
+    """
+    Returns a dictionary with the partitions and their information
+    """
+    dstat_lines = cat(self.PROC_DISKSTATS)
+    pl = dict()
+    for line in dstat_lines:
+      if line:
+        p = partition()
+        (p.M,           p.m,        p.dev,
+         p.r,           p.r_merged, p.r_sectors, p.r_ms,
+         p.w,           p.w_merged, p.w_sectors, p.w_ms,
+         p.io_progress, p.io_ms,    p.ms_weighted) = line.strip().split()
+
+        if p.dev in self.partitions:
+          pl[p.dev] = p
+
+    return pl
+   
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+    debug("Using %s" % (self.PROC_DISKSTATS))
+
+    initial = self.get_status()
+    time.sleep(self.interval)
+    final   = self.get_status()
+
+    # Get bytes/sec
+    for d in self.partitions:
+      r_diff = ((final[d].r_sectors - initial[d].r_sectors) * self.sector_size) / self.interval
+      w_diff = ((final[d].w_sectors - initial[d].w_sectors) * self.sector_size) / self.interval
+      final[d].r_rate = r_diff
+      final[d].w_rate = w_diff
+      
+    # Status string
+    msg = " ".join([ "%s (r: %d KB/s, w: %d KB/s)" % (i.dev, i.r_rate / 1024, i.w_rate / 1024)  for i in sorted(final.values(), key=lambda x:x.dev) ])
+    performance = " ".join([ "'%s read'=%d '%s write'=%d" % (i.dev, i.r_rate, i.dev, i.w_rate) for i in sorted(final.values(), key=lambda x:x.dev) ])
+
+    return (EX_OK, msg, performance)
+
+
+# When called directly
+if __name__ == "__main__":
+  run(check_partition_activity)
+

@@ -1,0 +1,196 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_gridftp_transfer
+#
+# DESCRIPTION : Process the Gridftp log to retrieve informations on transfer failure.
+#
+# AUTHORS :     Alexandre.beche@cern.ch
+#
+##############################################################################
+
+import re
+from time import strptime, mktime, gmtime
+import datetime
+from lcgdmcommon import *
+
+class check_gridftp_transfer:
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-GRIDFTP-TRANSFER"
+
+  # Defaults
+  DEFAULT_LOG      = "/var/log/dpm-gsiftp/gridftp.log"
+  DEFAULT_INTERVAL = 10
+  DEFAULT_WARNING  = 70
+  DEFAULT_CRITICAL = 90
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"f:": "logfile=",
+                         "i:": "interval=",
+                         "w:": "warning=",
+                         "c:": "critical="}
+
+  # Specific usage information
+  __usage__ = """
+\t-f, --log\tThe dpm-gsiftp log file.Default %s
+\t-i, --interval\tDefault interval to use. In minutes. Default: %d s.
+\t-w, --warning\tWarning threshold: Percentage of transfer failure. default: %d.
+\t-c, --critical\tCritical threshold: Percentage of transfer failure. default: %d.
+""" % (DEFAULT_LOG, DEFAULT_INTERVAL, DEFAULT_WARNING, DEFAULT_CRITICAL)
+
+  # Methods
+
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+
+    # GridFTP logfile to use
+    if "logfile" in opt:
+      self.log =  opt["logfile"]
+    else:
+      self.log = self.DEFAULT_LOG
+
+    # Interval
+    if "interval" in opt:
+      self.interval = int(opt["interval"])
+    else:
+      self.interval = self.DEFAULT_INTERVAL
+
+    # Threshold
+        # Warning and critical
+    opt_warning  = self.DEFAULT_WARNING
+    opt_critical = self.DEFAULT_CRITICAL
+    if "warning" in opt:
+      opt_warning = opt["warning"]
+    if "critical" in opt:
+      opt_critical = opt["critical"]
+
+    self.warning  = int(opt_warning)
+    self.critical = int(opt_critical)
+
+  def parse_logfile(self):
+    """ Function in charge of the logfile parsing"""
+
+    # Interesting values
+    transfer_succeed = 0
+    transfer_start_then_failed = 0
+    transfer_failed_before_starting = 0
+
+    # Pattern to parse the logfile
+    endtrans_pattern = re.compile("^\[(\d*)\] (.*) :: Closed connection")
+    begtrans_pattern = re.compile("^\[(\d*)\] (.*) :: Server started")
+    return_pattern   = re.compile("^\[(\d*)\] (.*) :: .* \[SERVER\]\: (\d*) ")
+
+    # Flags for each thread (transfer_start and error)
+    thread_infos = {}
+
+    # Open the file and parse it in reverse order
+    gridftp = open(self.log, "r")
+    for line in reversed_lines(gridftp):
+      found_end = endtrans_pattern.search(line)
+      found_start = begtrans_pattern.search(line)
+      found_pattern = return_pattern.search(line)
+
+      # End transfer detected
+      if found_end:
+        thread_id = int(found_end.group(1))
+        thread_infos[thread_id] = {"transfer_start":0, "error":0}
+        
+        # Set the error and transfer flags to 0
+        transfer_start, error = 0, 0
+ 
+        # Stop the probes if the wanted interval is finished
+        try:
+          dt = strptime(found_end.group(2).strip(), "%a %b %d %X %Y")
+          if int(mktime(gmtime()) - mktime(dt)) > (self.interval * 60):
+            break
+        except:
+          continue
+
+      # Standard return detected
+      elif found_pattern:
+        thread_id = int(found_pattern.group(1))
+        if thread_id not in thread_infos:
+          continue
+
+        # Error code detected
+        code = found_pattern.group(3) 
+        if (int(code) > 399) and (int(code) < 555):
+          thread_infos[thread_id]["error"] = 1
+        # Transfer starting detected
+        elif int(code) == 150:
+          thread_infos[thread_id]["transfer_start"] = 1   
+       
+      # Transfert starting pattern
+      elif found_start:
+        thread_id = int(found_start.group(1))
+        if thread_id not in thread_infos:
+          continue
+        
+        if (thread_infos[thread_id]["transfer_start"] == 1) and (thread_infos[thread_id]["error"] == 0):
+          transfer_succeed += 1
+        elif (thread_infos[thread_id]["transfer_start"] == 1) and (thread_infos[thread_id]["error"] == 1):
+          transfer_start_then_failed += 1
+        elif (thread_infos[thread_id]["transfer_start"] == 0) and (thread_infos[thread_id]["error"] == 1):
+          transfer_failed_before_starting += 1
+
+        # Remove the transfer infos from the list
+        del thread_infos[thread_id]        
+
+    return transfer_succeed, transfer_start_then_failed, transfer_failed_before_starting         
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+    @return A tuple (exit code, message, performance)
+    """
+
+    tsucceed, tstart_then_failed, tfailed_before_starting = self.parse_logfile()
+
+    # Compute the total number of attemps and the number of failures
+    total = tsucceed + tstart_then_failed + tfailed_before_starting
+    
+    if total != 0:
+      failure = 100 * (tstart_then_failed + tfailed_before_starting) / total
+    else:
+      failure = 0
+
+    return_result =  str(failure) + " % of the transfers have failed"    
+    performance_data = "transfer-succeed=" + str(tsucceed) + ";"
+    performance_data += "transfer-failed-before-starting=" + str(tfailed_before_starting) + ";"
+    performance_data += "transfer-failed-after-starting=" + str(tstart_then_failed)
+
+    if failure > self.critical:
+      exit_code = EX_CRITICAL
+    elif failure > self.warning:
+      exit_code = EX_WARNING
+    else:
+      exit_code = EX_OK
+
+    return (exit_code, return_result, performance_data)
+
+
+if __name__ == "__main__":
+  run(check_gridftp_transfer)

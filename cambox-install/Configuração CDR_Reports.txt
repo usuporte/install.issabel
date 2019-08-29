@@ -1,0 +1,15 @@
+Verificar se tem o modulo mysql no banco
+"ls /usr/lib64/asterisk/modules/cdr*"
+
+Copiar o modulo do cdr_mysql.so para o servidor.
+"scp cam@10.254.37.10:cdr_mysql.so ."
+
+Copiar o modulo para a pasta correta
+"cp cdr_mysql.so /usr/lib64/asterisk/modules/"
+
+Dar um reload no modulo
+"asterisk -vvvr"
+"module load cdr_mysql.so"
+
+Verificar se esta ativo
+"cdr show status"

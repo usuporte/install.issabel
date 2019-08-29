@@ -1,0 +1,150 @@
+#!/usr/bin/env python
+##############################################################################
+# Copyright (c) Members of the EGEE Collaboration. 2011.
+# See http://www.eu-egee.org/partners/ for details on the copyright
+# holders.
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS
+# OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+##############################################################################
+#
+# NAME :        check_hostcerts
+#
+# DESCRIPTION : Checks the validity of host certificates and CRLs
+#
+# AUTHORS :     Alejandro.Alvarez.Ayllon@cern.ch
+#
+##############################################################################
+
+import commands
+import os
+import socket
+from datetime import datetime, timedelta
+from dateutil.parser import parse
+from dateutil.tz import tzutc
+from lcgdmcommon import *
+
+class check_hostcerts:
+  "Checks the validity of host certificates and CRLs"
+  __version__     = "0.0.1"
+  __nagios_id__   = "DM-CERT"
+
+  # Defaults
+  DEFAULT_WARNING  = 10
+  DEFAULT_CRITICAL = 2
+
+  # Specific parameters, where key = short, value = long (i.e. {"h":"help", "C:":"command="})
+  # getopt format. The long version will be the one passed even when the short is specified
+  __additional_opts__ = {"w:": "warning=",
+                         "c:": "critical=",
+                         "C:": "certificate=",
+                         "s":  "subject"}
+
+  # Specific usage information
+  __usage__ = """
+\t-w, --warning\tSets the warning value, in days. Default: %d
+\t-c, --critical\tSets the critical value, in days. Default: %d
+\t-C, --certificate\tHost certificate
+\t-s, --subject\tChecks the hostname vs the certificate's subject
+
+Description of work executed by the probe:
+
+\t1. Execute an openssl command and retreive
+\t\tsubject
+\t\tstartdate
+\t\tenddate 
+\t2. Execute a command to retreive the local hostname
+\t3. Returns the values to nagios
+\t\tWarning alert is triggered if the validity left is too small
+\t\tCritical alert is triggered if the certificate is not valid or not enough validity left 
+
+""" % (DEFAULT_WARNING, DEFAULT_CRITICAL)
+
+  # Methods
+
+  def __init__(self, opt = {}, args = []):
+    """
+    Constructor
+
+    @param opt  Contains a dictionary with the long option name as the key, and the argument as value
+    @param args Contains the arguments not associated with any option
+    """
+    opt_warning  = self.DEFAULT_WARNING
+    opt_critical = self.DEFAULT_CRITICAL
+    if "warning" in opt:
+      opt_warning = opt["warning"]
+    if "critical" in opt:
+      opt_critical = opt["critical"]
+
+    self.warning  = int(opt_warning)
+    self.critical = int(opt_critical)
+
+    self.certificate   = opt["certificate"]
+
+    self.check_subject = "subject" in opt
+
+  def get_cert_field(self, field):
+    """
+    Executes openssl with the flag -field and returns the field
+    value (no key)
+    """
+    (error, value) = commands.getstatusoutput("openssl x509 -in %s -noout -%s" % (self.certificate, field))
+    if error:
+      raise IOError("openssl failed (%s)" % field)
+    return value.split('=')[-1].strip()
+
+  def main(self):
+    """
+    Test code itself. May raise exceptions.
+
+    @return A tuple (exit code, message, performance)
+    """
+    # Check pem certificate
+    try:
+      subject = self.get_cert_field("subject")
+      start   = parse(self.get_cert_field("startdate"))
+      end     = parse(self.get_cert_field("enddate"))
+    except Exception, e:
+      return (EX_CRITICAL, "Error opening the certificate file: %s" % str(e), None)
+
+    # Subject
+    debug("Certificate for %s" % subject)
+
+    # Expiration date
+    debug("Certificate valid between %s and %s" % (start, end))
+
+    # Check validity
+    hostname = socket.getfqdn()
+    if self.check_subject and hostname != subject:
+      return (EX_CRITICAL, "The certificate subject and the hostname do not match", None)
+
+    # Check host cert
+    now = datetime.now(tzutc())
+    if start > now:
+      return (EX_CRITICAL, "The certificate is not valid yet", None)
+    elif now > end:
+      return (EX_CRITICAL, "The certificate has expired", None)
+    elif now > end - timedelta(days = self.critical):
+      exit = EX_CRITICAL
+    elif now > end - timedelta(days = self.warning):
+      exit = EX_WARNING
+    else:
+      exit = EX_OK
+
+    left = end - now
+    return (exit, "The host certificate expires in %d days" % left.days, "expires=%d;%d:;%d:" % (left.days, self.warning, self.critical))
+
+# When called directly
+if __name__ == "__main__":
+  run(check_hostcerts)
+

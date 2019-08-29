@@ -1,0 +1,104 @@
+Acessar a pasta cam-install-stable
+
+mv stunserver-1.2.13.tgz /usr/local/src/ 
+
+# transferi o arquivo .tgz para a pasta /usr/local/src
+
+cd /usr/local/src/
+tar -xzvf stunserver-1.2.13.tgz
+cd stunserver
+
+cat README
+
+yum groupinstall "Development Tools"
+yum install boost-devel
+yum install openssl-devel
+
+make
+cp /usr/local/src/stunserver/stunserver /usr/sbin/ # make install
+chmod 0777 /usr/sbin/stunserver
+
+vim /etc/init.d/stunserver
+>> 
+#!/bin/sh -e
+
+#
+# stunserver      Startup script for the STUN Server daemon
+#
+# chkconfig: - 88 15
+# description: The STUN server manages communication through NAT 
+
+
+
+### BEGIN INIT INFO
+# Provides:          stunserver
+# Required-Start:    $local_fs $network $syslog khompdrv
+# Required-Stop:     $local_fs $network $syslog khompdrv
+# Should-Start:      networking network-manager
+# Should-Stop:       networking network-manager
+# Default-Start:     2 3 5
+# Default-Stop:      0 6
+# Short-Description: stunserver daemon
+### END INIT INFO
+
+	
+# Check needed files.
+test -x /usr/sbin/stunserver        || \
+{
+    echo "ERROR: Unable to find stunserver! Not starting!" >&2
+    exit 1
+}
+
+stunserver_helpline="Supported actions: start|stop|restart|force-start|force-stop|status|help"
+
+case "$1"
+in
+    start|force-start|"")
+        /usr/sbin/stunserver --mode full &
+		echo "Stun server inicializado";
+    ;;
+
+    stop|force-stop)
+        killall -9 stunserver
+		echo "Stun server encerrado";
+    ;;
+
+    restart)
+        killall -9 stunserver
+        sleep 5
+        /usr/sbin/stunserver --mode full &
+		echo "Stun server reinicializado";
+    ;;
+
+    status)
+		echo "Stun server is ... ";
+        if pidof stunserver 1>/dev/null
+        then
+            echo "running"
+            exit 0
+        else
+            echo "not running"
+            exit 1
+        fi
+    ;;
+
+    help)
+		echo "Stun HELP: "
+        echo "${stunserver_helpline}"
+        exit 0
+    ;;
+
+    *)
+        echo "ERROR: Unknown action in Stunserver! ${stunserver_helpline}"
+        exit 1
+    ;;
+
+esac
+<<
+
+chmod 0777 /etc/init.d/stunserver
+
+systemctl daemon-reload
+
+systemctl start stunserver # Inicializar Agora
+systemctl enable stunserver # inicializar no BOOT

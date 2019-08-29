@@ -1,0 +1,16 @@
+---
+Network:
+    LocalAudioInterface:    !
+    LocalAudioPort:         14200
+    MediaServerAddress:     !
+    MediaServerPort:        14102
+    SignalingServerAddress: !
+    SignalingServerPort:    14101
+InternalConfigs:
+    K3LServerBuffer: 90
+    K3LClientBuffer: 90
+    TdmopBuffer: 90
+    KmpBuffer: 90
+    EbsBuffer: 7
+---
+°Ô`&

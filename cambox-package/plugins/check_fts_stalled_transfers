@@ -1,0 +1,122 @@
+#!/usr/bin/env python
+try:
+    import json
+except:
+    import simplejson as json
+import optparse
+import os
+import pycurl
+import sys
+import time
+from StringIO import StringIO
+from datetime import datetime, timedelta
+
+# Exit codes (NAGIOS compliant)
+EX_OK = 0
+EX_WARNING = 1
+EX_CRITICAL = 2
+EX_UNKNOWN = 3
+
+
+class FtsStalledTransfersProbe:
+    """
+    Check if there are any transfers that have been waiting for too long
+    """
+
+    def __init__(self, argv):
+        parser = optparse.OptionParser(
+            prog=os.path.basename(argv[0]),
+            description=' '.join(self.__doc__.split())
+        )
+
+        parser.add_option('-w', '--warning', type=int, default=2, help='Warning threshold, in days')
+        parser.add_option('-c', '--critical', type=int, default=7, help='Critical threshold, in days')
+        parser.add_option('-H', '--host', type='str', default=None, help='FTS Host')
+        parser.add_option('-m', '--monitoring', type=str, default=None,
+                          help='FTS Monitoring endpoint, defaults to https://$host:8449/fts3/ftsmon/')
+        parser.add_option('--cert', type=str, default=None, help='User certificate')
+        parser.add_option('--key', type=str, default=None, help='User private key')
+
+        self.options, args = parser.parse_args(argv)
+
+        if self.options.host is None and self.options.monitoring is None:
+            parser.error("-H OR -m must be specified")
+
+        if not self.options.monitoring:
+            self.options.monitoring = "https://%s:8449/fts3/ftsmon/jobs" % self.options.host
+        else:
+            self.options.monitoring += '/jobs'
+
+    def __call__(self):
+        buffer = StringIO()
+
+        curl = pycurl.Curl()
+        curl.setopt(pycurl.WRITEFUNCTION, buffer.write)
+        curl.setopt(pycurl.FOLLOWLOCATION, True)
+        curl.setopt(pycurl.CAPATH, '/etc/grid-security/certificates')
+        curl.setopt(pycurl.URL, self.options.monitoring + '?state=SUBMITTED&orderby=submit_time&page=all')
+
+        if self.options.cert:
+            curl.setopt(pycurl.SSLCERT, self.options.cert)
+            curl.setopt(pycurl.CAINFO, self.options.cert)
+        if self.options.key:
+            curl.setopt(pycurl.SSLKEY, self.options.key)
+
+        try:
+            curl.perform()
+        except pycurl.error, e:
+            return EX_CRITICAL, e[2]
+        except Exception, e:
+            return EX_CRITICAL, str(e)
+
+        if curl.getinfo(pycurl.RESPONSE_CODE) != 200:
+            return EX_CRITICAL, "Got %d" % curl.getinfo(curl.RESPONSE_CODE)
+
+        try:
+            response = json.loads(buffer.getvalue())
+        except Exception, e:
+            return EX_CRITICAL, 'Could not retrieve the status from the monitoring (%s)' % str(e)
+
+        try:
+            submitted_count = response['count']
+            if submitted_count == 0:
+                return EX_OK, "No transfers in submitted state"
+
+            # Pick the oldest, which is the one with the oldest submit time
+            # and (oldest start time or no start time)
+            oldest_time = datetime.utcnow()
+            oldest = None
+            for t in response['items']:
+                reference_struct = time.strptime(t['submit_time'], '%Y-%m-%dT%H:%M:%SZ')
+                reference = datetime.fromtimestamp(time.mktime(reference_struct))
+                if reference < oldest_time:
+                    oldest = t
+                    oldest_time = reference
+        except Exception, e:
+            return EX_CRITICAL, 'Could not process the response from the server: %s' % str(e)
+
+        # Check elapsed to the oldest
+        now = datetime.utcnow()
+        elapsed = now - oldest_time
+        if elapsed > timedelta(days=self.options.critical):
+            return EX_CRITICAL, "Transfer stalled for %s (Job %s)" % (elapsed, oldest['job_id'])
+        elif elapsed > timedelta(days=self.options.warning):
+            return EX_WARNING, "Transfer stalled for %s (Job %s)" % (elapsed, oldest['job_id'])
+        else:
+            return EX_OK, "%d in submitted state (oldest queued for %s)" % (submitted_count, elapsed)
+
+
+if __name__ == '__main__':
+    probe = FtsStalledTransfersProbe(sys.argv)
+    (status, msg) = probe()
+
+    if status == EX_OK:
+        print "OK -", msg
+    elif status == EX_WARNING:
+        print "WARNING -", msg
+    elif status == EX_CRITICAL:
+        print "CRITICAL -", msg
+    else:
+        print "UNKNOWN -", msg
+
+    sys.exit(status)

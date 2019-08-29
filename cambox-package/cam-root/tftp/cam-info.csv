@@ -1,0 +1,8 @@
+ID,APARELHO,RAMAL,DDR,Matricula,Nome,BLOCO,SETOR,GRUPO DE CAPTURA,EMAIL,ATIVO,MAC,VLAN,Switch,Porta,Permissão,Grupo,BLF 1 Nome,BLF 1 Usuário,BLF 2 Nome,BLF 2 Usuário,BLF 3 Nome,BLF 3 Usuário,Observações
+1,IPS212,9701,,2208843,Secretaria Crateus,UFCCRATEUS,Secretaria Crateus,5, amandapires.ufc@gmail.com,,00268B0344C6,LAN_VOZ,SW02,40,Local-Fixo,UFCCRATEUS,,,,,,,-
+2,IPS212,9702,,2144168,Diretoria Crateus,UFCCRATEUS,Diretoria Crateus,2,livio@crateus.ufc.br,,00268B03452A,LAN_VOZ,SW02,41,Local-Fixo,UFCCRATEUS,,,,,,,
+3,1615,9703,,2755874,SL Professores TI Crateus,UFCCRATEUS,SL Professores TI Crateus,15,emerson@crateus.ufc.br,,000B82A596AB,LAN_VOZ,SW02,42,Local-Fixo,UFCCRATEUS,,,,,,,
+4,1615,9704,,2162438,TI Crateus,UFCCRATEUS,TI Crateus,3,mark.alleson@crateus.ufc.br,,000B82A59DF7,LAN_VOZ,SW02,43,Local-Fixo,UFCCRATEUS,,,,,,,
+5,1615,9705,,2295278,Gab Coordenadores Crateus,UFCCRATEUS,Gab Coordenadores Crateus,5,andre@crateus.ufc.br,,000B82A5971F,LAN_VOZ,SW02,44,Local-Fixo,UFCCRATEUS,,,,,,,
+6,1615,9706,,2295445,SL Professores ENG Crateus,UFCCRATEUS,SL Professores ENG Crateus,15,rodrigo@crateus.ufc.br,,000B82A59B8B,LAN_VOZ,SW02,45,Local-Fixo,UFCCRATEUS,,,,,,,
+7,1615,9707,,2104423,RT Biblioteca Crateus,UFCCRATEUS,RT Biblioteca Crateus,2,felipefs@ufc.br,,000B82A59B81,LAN_VOZ,SW02,46,Local-Fixo,UFCCRATEUS,,,,,,,

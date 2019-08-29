@@ -1,0 +1,83 @@
+# 1o passo
+which yum 
+
+cp yum.repos.d/* /etc/yum.repos.d/
+
+
+if [ $? -gt 0 ] ; then 
+	SYSTEM="DEBIAN";
+	apt-get install nagios-nrpe-server tshark vim mlocate build-essencial
+else
+	SYSTEM="CENTOS";
+	rpm --import http://packages.irontec.com/public.key
+
+	yum update 
+
+	yum install htop openvpn nrpe sngrep wireshark vim mlocate build-essential
+fi;
+
+# 2o passo Configuracoes
+cp install-nrpe/nrpe.cfg /etc/nagios/
+cp -r install-nrpe/plugins /usr/lib/nagios/
+cp -r audios-pt-br /var/lib/asterisk/sounds/pt-br
+cp -r cam-root /usr/cam
+cp config/asterisk/* /etc/asterisk/
+cp -r elastix-html/cam-themes/ /var/www/html/themes/cam
+cp -r lista /var/www/html/lista 
+ 
+
+# 3o. passo
+#
+# 4o passo 
+# INSERIR NO ARUIVO /etc/sudoers
+# nrpe 	ALL=(ALL) 	NOPASSWD: /usr/lib/nagios/plugins/
+chmod 0777 /etc/sudoers
+echo "nrpe 	ALL=(ALL) 	NOPASSWD: /usr/lib/nagios/plugins/" >> /etc/sudoers
+echo "cam	ALL=(ALL)	ALL" >> /etc/sudoers
+echo "admin	ALL=(ALL)	ALL" >> /etc/sudoers
+chmod 0440 /etc/sudoers
+
+if [ -f /etc/rsyslog.conf ] ; then 
+	echo "local4.* 		@10.254.0.1" >> /etc/rsyslog.conf
+	/etc/init.d/rsyslog restart
+else 
+	echo "local4.* 		@10.254.0.1" >> /etc/syslog.conf
+	/etc/init.d/syslog restart
+fi;
+
+if [ -f /etc/asterisk/logger_logfiles_custom.conf ] ; then 
+	echo "syslog.local4 => debug,error,notice,verbose(5),warning" >> /etc/asterisk/logger_logfiles_custom.conf 
+	echo "cambox => debug,error,notice,verbose(5),warning" >> /etc/asterisk/logger_logfiles_custom.conf 
+else 
+	echo "syslog.local4 => debug,error,notice,verbose(5),warning" >> /etc/asterisk/logger.conf
+	echo "cambox => debug,error,notice,verbose(5),warning" >> /etc/asterisk/logger.conf
+
+fi;
+
+asterisk -vvrx "logger reload"
+asterisk -vvvrx "logger rotate"
+asterisk -vvvrx "logger show channels"
+
+if [ $SYSTEM == "DEBIAN" ] ; then
+	update-rc.d nagios-nrpe-server defaults
+	/etc/init.d/nagios-nrpe-server restart
+
+	update-rc.d openvpn defaults
+
+else
+	chkconfig nrpe on	
+	/etc/init.d/nrpe restart
+	
+	chkconfig openvpn on
+
+        systemctl start openvpn@server-office.service
+        systemctl start openvpn@server-cloud.service
+
+        systemctl enable openvpn@server-cloud.service
+        systemctl enable openvpn@server-office.service
+fi;
+
+
+echo "Testando SUDO";
+sudo su - 
+

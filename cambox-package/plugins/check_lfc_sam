@@ -1,0 +1,234 @@
+#!/usr/bin/env python
+#
+# LFC Probe script.  Runs a set of probes against an LFC server
+#
+# Includes a reasonably generic probe framework
+#
+# James Casey <james.casey@cern.ch>
+#
+
+import os
+import sys
+import getopt
+import time
+import errno
+
+try:
+    from gridmon import probe
+    import lfc
+except ImportError,e:
+    summary = "UNKNOWN: Error loading modules : %s" % (e)
+    sys.stdout.write(summary+'\n')
+    sys.stdout.write(summary+'\nsys.path: %s\n'% str(sys.path))
+    sys.exit(3)
+
+def parse_uri(uri):
+    """Return the [host, port] from the lfc URI.  Accepts:
+    lfc://host/
+    lfc://host:port/
+    lfc://host
+    lfc://host:port
+    host
+    host:port"""
+
+    import re
+    match = re.match('([a-z]*://)?([^/:$]*):?(\d+)?/?', uri)
+    return (match.group(2), match.group(3))
+
+class LFCMetrics(probe.MetricGatherer) :
+    """A Metric Gatherer specific for the LFC.  Handles the same
+    metrics as the original perl LEMON sensor code"""
+    OPS_DIR="/grid/ops"
+
+
+    def __init__(self, tuples, timeout= None):
+        probe.MetricGatherer.__init__(self,tuples,'LFC')
+        if not tuples.has_key('serviceURI'):
+            raise TypeError("No serviceURI passed in")
+        [self.hostName, self.portNumber] = parse_uri(tuples['serviceURI'])
+
+        os.environ['LFC_HOST'] = self.hostName
+        if self.portNumber:
+            os.environ['LFC_PORT'] = self.portNumber
+
+        os.environ['LFC_CONRETRY']="0"
+        if timeout:
+            os.environ['LFC_CONNTIMEOUT']= timeout
+        else:
+            os.environ['LFC_CONNTIMEOUT']="15"
+
+        self.errbuf=" "*120
+        lfc.lfc_seterrbuf(self.errbuf,len(self.errbuf))
+
+        self.probeinfo = { 'probeName' : 'ch.cern.LFC-Probe',
+                           'probeVersion' : '1.0',
+                           'serviceVersion' : '>= 1.6.0'}
+        _metrics = { 'Read' :{ 'metricName' : 'ch.cern.LFC-Read',
+                                       'metricLocality' : 'remote', 'metricType' : 'status',
+                                       'metricDescription' :"Test if we can read an entry in the catalog"},
+                      'Write' :{'metricName' : 'ch.cern.LFC-Write',
+                                'metricLocality' : 'remote', 'metricType' : 'status',
+                                'metricDescription' : "Test if we can update the modification time of an entry in the catalog"},
+                      'Readdir' :{'metricName' : 'ch.cern.LFC-Readdir',
+                                              'metricLocality' : 'remote', 'metricType' : 'performance',
+                                              'dataType' : 'float',
+                                              'metricDescription':"Time how long it takes to read a directory (/grid)"},
+                      'ReadDli' :{'metricName' : 'ch.cern.LFC-ReadDli',
+                                  'metricLocality' : 'remote', 'metricType' : 'status',
+                                  'metricDescription':"Do a read from a DLI"},
+                      'Ping' :{'metricName' : 'ch.cern.LFC-Ping',
+                                  'metricLocality' : 'remote', 'metricType' : 'status',
+                                  'metricDescription':"Ping LFC service."}}
+        self.ns = 'ch.cern'
+        self.set_metrics(_metrics)
+
+    def metricRead(self):
+        "Test if we can read an entry in the catalog"
+        DIR_NAME = "/grid/%s"%self.voName
+
+        stat = lfc.lfc_filestatg()
+        res = lfc.lfc_statg(DIR_NAME, "", stat)
+        if res == 0:
+            return (0, "OK")
+        else:
+            err_num = lfc.cvar.serrno
+            err_string = lfc.sstrerror(err_num)
+            return (2, "Trying to statg(%s) : %s"%(DIR_NAME,err_string))
+
+    def metricWrite(self):
+        "Test if we can update the modification time of an entry in the catalog"
+
+        FILE_NAME="/grid/%s/file-lfc-probe-%s"%(self.voName,self.hostName)
+
+        res = lfc.lfc_utime(FILE_NAME, None)
+        if res == 0:
+            return (0, "OK")
+        else:
+            err_num = lfc.cvar.serrno
+            # try again since this could just be non-retried DB problem
+            if err_num != errno.ENOENT :
+                res = lfc.lfc_utime(FILE_NAME,None)
+                if res != 0:
+                    err_num = lfc.cvar.serrno
+                    err_string = lfc.sstrerror(err_num)
+                    return (2, err_string)
+            else: # try and create the file
+                uuid=None
+                import commands
+                def uuidgen():
+                    return commands.getoutput('uuidgen')
+                guid = uuidgen()
+
+                lfc.lfc_umask(0000)
+                res = lfc.lfc_creatg(FILE_NAME, guid, 0664)
+                if res != 0:
+                    err_num = lfc.cvar.serrno
+                    err_string = lfc.sstrerror(err_num)
+                    return (2, err_string)
+                res = lfc.lfc_addreplica(guid, None, "test.example.com",
+                                         "srm://test.example.com/%s/file-%s-%s"%(self.voName, self.hostName, guid),
+                                         "-", "P","", "")
+                if res != 0:
+                    err_num = lfc.cvar.serrno
+                    err_string = lfc.sstrerror(err_num)
+                    return (2, "Can't add replica : %s"%err_string)
+                # can't rely on default group ACLs on the parent directory
+                # add VO's root group write access ACL explicitly
+                try:
+                    # lfc.lfc_getgrpbynam() swig wrap is buggy; use lfc2
+                    import lfc2
+                    gid = lfc2.lfc_getgrpbynam(self.voName)
+                except Exception, e:
+                    return (3, "Couldn't add VO's root group write access ACL: %s" % str(e))
+                else:
+                    _, acls_list = lfc.lfc_getacl(FILE_NAME,
+                                                  lfc.CA_MAXACLENTRIES)
+                    acl_grp = lfc.lfc_acl()
+                    acl_grp.a_type = lfc.CNS_ACL_GROUP
+                    acl_grp.a_id   = gid
+                    acl_grp.a_perm = 6
+                    acls_list.append(acl_grp)
+                    # we need to add mask as well
+                    acl_m = lfc.lfc_acl()
+                    acl_m.a_type = lfc.CNS_ACL_MASK
+                    acl_m.a_id   = 0
+                    acl_m.a_perm = 6
+                    acls_list.append(acl_m)
+                    try:
+                        lfc2.lfc_setacl(FILE_NAME, acls_list)
+                    except Exception, e:
+                        return (3, "Couldn't add VO's root group write access ACL: %s" % str(e))
+
+        return (0, "OK")
+
+    def metricReaddir(self):
+        "Time how long it takes to read a directory (/grid)"
+        READDIR_DIR='/grid'
+
+        dir = lfc.lfc_opendir(READDIR_DIR)
+        if dir == None:
+            err_num = lfc.cvar.serrno
+            err_string = lfc.sstrerror(err_num)
+            return (2, err_string)
+
+        start = time.time()
+        entry = lfc.lfc_readdirg(dir)
+        while entry:
+            entry = lfc.lfc_readdirg(dir)
+
+        end = time.time()
+        return (0, "%2.3f"%(end-start))
+
+    def metricReadDli(self):
+        "Do a read from a DLI"
+
+        FILE_NAME="/grid/%s/file-lfc-probe-%s"%(self.voName,self.hostName)
+
+        try:
+            from SOAPpy import SOAPProxy, SOAPConfig, faultType
+        except ImportError, e:
+            return (3, "Cannot load SOAPpy to gather metric : %s"%e)
+
+        c = SOAPConfig()
+        remote = SOAPProxy("http://%s:8085/"%self.hostName, namespace="urn:DataLocationInterface",
+                           config = c)
+        # SOAPpy 0.11.4 (deployed with gLite 3.0) writes the fault to stdout
+        # so we redirect it during the call to a dummy - only need to handle write...
+        class dummy_stdout :
+            def __init__(self) :
+                pass
+
+            def write(write, *kw) :
+                pass
+        sys.stdout = dummy_stdout()
+        try:
+            try:
+                result = remote.listReplicas(inputDataType="lfn", inputData=FILE_NAME)
+            except faultType, fault:
+                if fault.faultstring == 'InputData' :
+                    return (2, "Could not find LFN : %s"%FILE_NAME)
+                if fault.faultstring == 'NoURLFound' :
+                    return (2, "No PFN for LFN : %s"%FILE_NAME)
+                return (3, "Unknown SOAP Fault : %s"%fault)
+            except Exception, e:
+                return (3, "Unknown Exception : %s"%e)
+
+        finally:
+            sys.stdout = sys.__stdout__
+
+        return (0, "Found %d PFN"%len(result))
+
+    def metricPing(self):
+        'Ping LFC service.'
+
+        ver = ' '*256
+        res = lfc.lfc_ping(self.hostName, ver)
+        if res == 0:
+            return ('OK', '%s\n'%ver.rstrip())
+        else:
+            err_num = lfc.cvar.serrno
+            err_string = lfc.sstrerror(err_num)
+            return ('CRITICAL', err_string)
+
+runner = probe.Runner(LFCMetrics, probe.ProbeFormatRenderer())
+sys.exit(runner.run(sys.argv))
