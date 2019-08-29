@@ -149,5 +149,3 @@ O foco da **CAM Tecnologia** ao realizar revenda de equipamentos é oferecer a s
 
 * Configuração da Rede
 * **sudo systemctl enable dhcpd && /etc/init.d/netword restart**
-
-
