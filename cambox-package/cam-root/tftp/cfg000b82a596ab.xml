@@ -1,46 +1,46 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <gs_provision version="1">
-    <config version="1">
-        <P271>1</P271>
-        <P2312>200.129.62.129</P2312>
-	<P47>10.51.88.1</P47>
-	<P512>180</P512><!-- Tempo de Registro -->
-	<P2397>1</P2397><!-- Enable Keep alive -->
-        <P35>9703</P35>
-        <P270>SL Professores TI Crateus</P270>
-        <P3>SL Professores TI Crateus</P3>
-        <P36>9703</P36>
-	<P33>*97</P33>
-        <P34>ufccrateus@20179703</P34>
-        <P2333>200.129.62.129:5060</P2333>
-        <P48>10.51.88.1:5060</P48>
-        <P290>{ x+ | *x+ | **x+ | *xx*x+ | *x | #x }</P290>
-        <P1362>pt</P1362>
-        <P78>0</P78>
-        <P84>1</P84>
-        <P57>0</P57>
-        <P58>8</P58>
-	<P229>%{VLAN}</P229><!-- PC Port VLAN Tag. Defaul: 0 -->
-	<P196>pbxip</P196><!-- New User Password -->
-	<P2>ufccrateus@2017CE</P2><!-- New Admin Password -->
-	<P64>BRST+3BRDT+2,M10.3.0,M2.3.0</P64>
-	<P30>10.51.88.1</P30>
-	<P102>2</P102><!-- Date Display Format: dd-mm-yyyy -->
-	<P122>1</P122><!-- Time Display Format: 24 Horas -->
-	<P1377>BRXX0201:1:BR</P1377><!-- Cidade -->
-	<P1378>10</P1378><!-- Intervalo de tempo para atualizar o tempo -->
-	<P1379>c</P1379><!-- Unidade de Graus -->
-	<P340>1</P340><!-- habilita SCREEN personalizado -->
-	<P1349>1</P1349><!-- habilita download de arquivo XML para SCREEN -->
-	<P1343>1</P1343><!-- Arquvio default para todos os telefones -->
-	<P341>200.129.62.129/screen/</P341><!-- URL para SCREEN -->
-	<P330>1</P330> <!-- ENABLE PHONEBOOK 1 HTTP / 2 TFTP / 3 HTTPS -->
-	<P237>200.129.62.129/tftp</P237> <!-- SERVER ADDRESS PHONEBOOK -->
-	<P332>720</P332> <!-- UPDATE PHONEBOOK MINUTES -->
-	<P333>1</P333> <!-- MANUALLY ENTRIES REMOVE - yes -->
-	<P340>1</P340> <!-- 0 (Disabled) | 1 (HTTP) | 2 (TFTP)) | 3 (HTTPS) -->
-	<P1349>1</P1349> <!-- Download on Boot-up -->
-	<P1343>0</P1343> <!-- Custom Filename -->
-	<P192>200.129.62.129/tftp/</P192> <!-- SERVER PATH -->
-    </config>
+	<config version="1">
+		<P271>1</P271>
+		<P2312>200.129.62.129</P2312>
+		<P47>10.51.88.1</P47>
+		<P512>180</P512> <!-- Tempo de Registro -->
+		<P2397>1</P2397> <!-- Enable Keep alive -->
+		<P35>9703</P35>
+		<P270>SL Professores TI Crateus</P270>
+		<P3>SL Professores TI Crateus</P3>
+		<P36>9703</P36>
+		<P33>*97</P33>
+		<P34>ufccrateus@20179703</P34>
+		<P2333>200.129.62.129:5060</P2333>
+		<P48>10.51.88.1:5060</P48>
+		<P290>{ x+ | *x+ | **x+ | *xx*x+ | *x | #x }</P290>
+		<P1362>pt</P1362>
+		<P78>0</P78>
+		<P84>1</P84>
+		<P57>0</P57>
+		<P58>8</P58>
+		<P229>%{VLAN}</P229> <!-- PC Port VLAN Tag. Defaul: 0 -->
+		<P196>pbxip</P196> <!-- New User Password -->
+		<P2>ufccrateus@2017CE</P2> <!-- New Admin Password -->
+		<P64>BRST+3BRDT+2,M10.3.0,M2.3.0</P64>
+		<P30>10.51.88.1</P30>
+		<P102>2</P102> <!-- Date Display Format: dd-mm-yyyy -->
+		<P122>1</P122> <!-- Time Display Format: 24 Horas -->
+		<P1377>BRXX0201:1:BR</P1377> <!-- Cidade -->
+		<P1378>10</P1378> <!-- Intervalo de tempo para atualizar o tempo -->
+		<P1379>c</P1379> <!-- Unidade de Graus -->
+		<P340>1</P340> <!-- habilita SCREEN personalizado -->
+		<P1349>1</P1349> <!-- habilita download de arquivo XML para SCREEN -->
+		<P1343>1</P1343> <!-- Arquvio default para todos os telefones -->
+		<P341>200.129.62.129/screen/</P341> <!-- URL para SCREEN -->
+		<P330>1</P330> <!-- ENABLE PHONEBOOK 1 HTTP / 2 TFTP / 3 HTTPS -->
+		<P237>200.129.62.129/tftp</P237> <!-- SERVER ADDRESS PHONEBOOK -->
+		<P332>720</P332> <!-- UPDATE PHONEBOOK MINUTES -->
+		<P333>1</P333> <!-- MANUALLY ENTRIES REMOVE - yes -->
+		<P340>1</P340> <!-- 0 (Disabled) | 1 (HTTP) | 2 (TFTP)) | 3 (HTTPS) -->
+		<P1349>1</P1349> <!-- Download on Boot-up -->
+		<P1343>0</P1343> <!-- Custom Filename -->
+		<P192>200.129.62.129/tftp/</P192> <!-- SERVER PATH -->
+	</config>
 </gs_provision>
