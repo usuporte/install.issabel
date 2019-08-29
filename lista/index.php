@@ -2,19 +2,18 @@
 
 $msg[0] = "Conexãeo com o banco falhou!";
 
-
 $modoOperacao = $_GET['modo'];
 $B_ExibirOnline = true;
 $B_ExibirOffline = true;
 
-if ($modoOperacao == 1)
-	$B_ExibirOffline = false;
-else if ($modoOperacao == 2)
-	$B_ExibirOnline = false;
-
+if ($modoOperacao == 1) {
+    $B_ExibirOffline = false;
+} else if ($modoOperacao == 2) {
+    $B_ExibirOnline = false;
+}
 
 $host = "localhost";
-$db   = "asterisk";
+$db = "asterisk";
 $user = "asteriskuser";
 $pass = "camtec!2013";
 $query = "SELECT u.extension, u.name, u.outboundcid, u.sipname, (CASE WHEN (SELECT COUNT(*) FROM sip s WHERE s.id = u.extension) > 0 THEN 'sip' WHEN (SELECT COUNT(*) FROM iax i WHERE i.id = u.extension) > 0 THEN 'iax' else 'custom' END) AS Type from users u";
@@ -50,7 +49,7 @@ $total = mysql_num_rows($dados);
 		});
 	});
 	</script>
-	<meta charset="UTF-8"> 
+	<meta charset="UTF-8">
 </head>
 <body>
 	<h1 align="center">Catálogo Telefônico</h1>
@@ -85,10 +84,10 @@ $total = mysql_num_rows($dados);
                                 $estado = "Custom";
                           }
 
-			if ($B_ExibirOnline == false && ( $estado == "OK" || $estado == "Custom" ) ) 
+			if ($B_ExibirOnline == false && ( $estado == "OK" || $estado == "Custom" ) )
 				continue;
 
-			if ($B_ExibirOffline == false && (!( $estado == "OK" || $estado == "Custom" ) ) ) 
+			if ($B_ExibirOffline == false && (!( $estado == "OK" || $estado == "Custom" ) ) )
 				continue;
 	?>
                         <td style="text-align:center"><?
@@ -118,7 +117,7 @@ $total = mysql_num_rows($dados);
 	<?
 		}
 	}
-	?>	
+	?>
 		</tbody>
 	</table>
 	<p>&nbsp;</p>
@@ -126,7 +125,7 @@ $total = mysql_num_rows($dados);
 		<a href="http://www.camtecnologia.com.br"><img src='images/cam-clean.png' width="150px" height='auto' align='middle' /></a>
                 <p>Copyright © 2016 CAM Tecnologia. Todos os direitos reservados.</p>
 
-	</div>	
+	</div>
 </body>
 <?
 // tira o resultado da busca da memória

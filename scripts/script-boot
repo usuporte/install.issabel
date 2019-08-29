@@ -7,9 +7,8 @@
 # Source function library.
 . /etc/init.d/functions
 
-startme() 
-{
-	echo "Habilitando comunicacao";
+startme() {
+	echo "Habilitando comunicacao"
 	/usr/sbin/kswitch-vlan eth0 vlan reset
 	/usr/sbin/kswitch-vlan eth0 vlan set 10,0,U
 	/usr/sbin/kswitch-vlan eth0 vlan set 30,1,U
@@ -22,28 +21,26 @@ startme()
 
 }
 
-stopme()
-{
-	echo "Script de STOP nao habilitado";
+stopme() {
+	echo "Script de STOP nao habilitado"
 }
 
 case "$1" in
 start)
-startme
-;;
+	startme
+	;;
 stop)
-stopme
-;;
+	stopme
+	;;
 status)
-status network
-;;
-restart|reload|condrestart)
-stopme
-startme
-;;
+	status network
+	;;
+restart | reload | condrestart)
+	stopme
+	startme
+	;;
 *)
-echo $"Usage: $0 {start|stop|restart|reload|status}"
-exit 1
+	echo $"Usage: $0 {start|stop|restart|reload|status}"
+	exit 1
+	;;
 esac
-
-
