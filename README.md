@@ -6,7 +6,7 @@ O **Issabel** é um software de PBX de comunicações unificadas de código aber
 
 > Software Disponível, Link para Realizar o **[Download Issabel ISO](https://www.issabel.org/)**
 
-#### Tela de Instalação no Hardware CAMBOX Físico, Utilizando um PenDrive Bootavel
+#### Tela de Instalação no Hardware Físico, Utilizando um PenDrive Bootavel
 
 - 01 - Na Tela Inicial da **Instalação Issabel**, Selecione **Install**, e Pressione o Botão **Enter**;
 
