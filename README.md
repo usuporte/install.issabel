@@ -1,4 +1,4 @@
-## INSTALAÇÃO ISSABEL 
+## Instalação Issabel 
 
 O **Issabel** é um software de PBX de comunicações unificadas de código aberto, que fornece configuração, gerenciamento e relatórios baseados na Web fáceis de usar para telefonia. Módulos que fornecem discagem preditiva podem ser adicionados.  
               
